@@ -3,23 +3,28 @@
 function normalizeCSSText(string){
 	return String(string).replace(/[ \t\n]+/g,'').replace(/;(?=})/g,'');
 }
-function matchesMock(actual, expected){
-	if (typeof expected != "object"){
-		equal(actual, expected);
+function matchesMock(actual, expected, errorMessage){
+	if (typeof expected == "string"){
+		equal(normalizeCSSText(actual), normalizeCSSText(expected), errorMessage);
 		return;
 	}
 	
-	equal("length" in actual, "length" in expected, "same length");
+	if (typeof expected != "object"){
+		equal(actual, expected, errorMessage);
+		return;
+	}
+	
+	equal("length" in actual, "length" in expected, errorMessage + " same length");
 	if ("length" in expected && + expected.length){
-		equal(actual.length, expected.length);
+		equal(actual.length, expected.length, errorMessage);
 	}
 	
 	if (typeof expected == 'string')
-		equal(normalizeCSSText(actual), normalizeCSSText(expected))
+		equal(normalizeCSSText(actual), normalizeCSSText(expected), errorMessage);
 	
 	if (typeof expected == 'object')
 	for (var property in expected){
-		matchesMock(actual[property], expected[property]);
+		matchesMock(actual[property], expected[property], property);
 	}
 }
 

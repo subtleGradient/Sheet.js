@@ -9,25 +9,22 @@ requires: SheetParser.CSS
 if (typeof exports == 'undefined') var exports = this;
 
 exports.Sheet = 
-function Sheet(sheet){
-	if (this instanceof Sheet) this.initialize(sheet);
-	else Sheet.from(sheet)
+function Sheet(cssText){
+	if (this instanceof Sheet) this.initialize(cssText);
+	else return Sheet.from(cssText)
 }
 
-Sheet.from = function(sheet){
-	return new Sheet(sheet);
+Sheet.from = function(cssText){
+	return new Sheet(cssText);
 };
 
 Sheet.prototype = {
 	
 	parser: SheetParser.CSS,
 	
-	initialize: function(sheet){
-		this.raw = sheet || ''
-	},
-	
-	getKeys: function(){
-		return this.parser.keys(this.raw);
+	initialize: function(cssText){
+		this.cssText = cssText || '';
+		this.cssRules = this.parser.parse(this.cssText);
 	}
 	
 };
