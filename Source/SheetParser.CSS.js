@@ -9,7 +9,6 @@ SheetParser.CSS = {};
 
 (function(X){
 	
-	
 	X.parse = function(cssText){
 		cssText = String(cssText);
 		
@@ -23,8 +22,7 @@ SheetParser.CSS = {};
 		
 		cssRules.cssText = cssText;
 		
-		while (found = regex.exec(cssText)) {
-			console.log(found)
+		while ((found = regex.exec(cssText))){
 			cssRules[cssRules.length++] = cssRule = {};
 			
 			// cssRule.raw = found;
@@ -33,11 +31,9 @@ SheetParser.CSS = {};
 			
 			cssRule.style = {length:0};
 			cssRule.style.cssText = found[16];
-			// cssRule.style_cssText = found[16];
 			
 			if (found[17]) {
 				delete cssRule.style;
-				// cssRule.cssText = found[0];
 				cssRules[++keyIndex] = found[18];
 				cssRules.length = keyIndex + 1;
 				cssRules[found[18]] = found[19];
@@ -53,7 +49,7 @@ SheetParser.CSS = {};
 		}
 		
 		return cssRules;
-	}
+	};
 	
 	X.at   = x(/\s* @(\w+) (?: \s+ ([^;{]+) | \s* )/);
 	X.atRule   = x([X.at, ';']);
@@ -63,7 +59,7 @@ SheetParser.CSS = {};
 	X.selector = x(/\s* ([^\{}]+?) \s*/);
 	X.block    = x(/\{ \s* ( (?: [^}] | \{[^}]*\} )* ) \s* \}/);
 	
-	X.selectorBlock = x([X.selector, X.block], 1)
+	X.selectorBlock = x([X.selector, X.block], 1);
 	X.atBlock  = x([X.at, X.block], 1);
 	
 	var or = '|';
@@ -77,7 +73,7 @@ SheetParser.CSS = {};
 		or,
 		x(X.selectorBlock, 1),
 		or,
-		x(X.keyValue, 1),
+		x(X.keyValue, 1)
 	]);
 	
 	function not(regex){
@@ -106,38 +102,3 @@ SheetParser.CSS = {};
 if (typeof exports == 'undefined') var exports = this;
 exports.SheetParser = SheetParser;
 
-
-/*
-cssRules:[
-	{
-		cssText: "#selector { color: green; background-color: rgb(0, 255, 0); }",
-		
-		selectorText: "#selector",
-		style: {
-			cssText: "color: green; background-color: rgb(0, 255, 0); ",
-			
-			"color":"green",
-			"background-color":"rgb(0, 255, 0)",
-			
-			0: "color",
-			1: "background-color",
-			length: 2
-		}
-	},
-	{
-		cssText: "#selector2 { color: blue; background-color: rgb(128, 0, 128); }",
-		
-		selectorText: "#selector2",
-		style: {
-			cssText: "color: blue; background-color: rgb(128, 0, 128); ",
-			
-			"color":"blue",
-			"background-color":"rgb(128, 0, 128)",
-			
-			0: "color",
-			1: "background-color",
-			length: 2
-		}
-	}
-]
-*/
