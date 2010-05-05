@@ -40,10 +40,21 @@ API ["DOM styleSheet"] = function(newSheet){
 		var sheet = newSheet(SHEET_MOCK_1.raw);
 		
 		ok(sheet, "must actually create a sheet");
+		//console.log(sheet);
+		
+		//console.log(sheet, SHEET_MOCK_1.parsed)
+		matchesMock(sheet, SHEET_MOCK_1.parsed)
+	})
+	
+	test ('DOM styleSheet: webkit animation',function(){
+		
+		var sheet = newSheet(WEBKIT_ANIMATION_MOCK_1.raw);
+		
+		ok(sheet, "must actually create a sheet");
 		// console.log(sheet);
 		
-		console.log(sheet, SHEET_MOCK_1.parsed)
-		matchesMock(sheet, SHEET_MOCK_1.parsed)
+		console.log(sheet.cssRules[0], WEBKIT_ANIMATION_MOCK_1.parsed.cssRules[0])
+		matchesMock(sheet, WEBKIT_ANIMATION_MOCK_1.parsed)
 	})
 	
 	test ('DOM styleSheet: updating values updates cssText',function(){
@@ -74,7 +85,7 @@ API ["DOM style attribute"] = function(newStyle){
 		
 		var sheet = newStyle(STYLE_MOCK_1.raw);
 		ok(sheet, "must actually create a style");
-		console.log(sheet);
+		//console.log(sheet);
 		
 		matchesMock(sheet, STYLE_MOCK_1.parsed)
 	})
@@ -161,4 +172,93 @@ var STYLE_MOCK_1 = {
 	}
 	
 };
+
+var WEBKIT_ANIMATION_MOCK_1 = {
+	
+	raw:'\
+@-webkit-keyframes my-animation {\
+	0% { background-color:blue }\
+	100% { background-color:green }\
+}\
+',
+	
+	parsed:{
+		cssRules:{
+			length:1,
+			0:{//WebKitCSSKeyframesRule
+				// type:8,
+
+				name:"my-animation",
+
+				cssText:'@-webkit-keyframes my-animation { 0% { background-color:blue } 100% { background-color:green } }',
+
+				cssRules:{
+					length:2,
+					0:{//WebKitCSSKeyframeRule
+						// type:9,
+						cssText: "0% { background-color: blue; }",
+						keyText: "0%",
+						style: {
+							cssText: "background-color: blue; ",
+							length: 1,
+							0: "background-color",
+							"background-color": "blue"
+						}
+					},
+					1:{//WebKitCSSKeyframeRule
+						type:9,
+						cssText: "100% { background-color: green; }",
+						keyText: "100%",
+						style: {
+							cssText: "background-color: green; ",
+							length: 1,
+							0: "background-color",
+							"background-color": "green"
+						}
+					}
+				},
+
+				// length:2,
+				0:{//WebKitCSSKeyframeRule
+					// type:9,
+					cssText: "0% { background-color: blue; }",
+					keyText: "0%",
+					style: {
+						cssText: "background-color: blue; ",
+						length: 1,
+						0: "background-color",
+						"background-color": "blue"
+					}
+				},
+				1:{//WebKitCSSKeyframeRule
+					type:9,
+					cssText: "100% { background-color: green; }",
+					keyText: "100%",
+					style: {
+						cssText: "background-color: green; ",
+						length: 1,
+						0: "background-color",
+						"background-color": "green"
+					}
+				}
+
+			}
+		}
+	}
+	
+};
+
+/*
+UNKNOWN_RULE: 0
+STYLE_RULE: 1
+CHARSET_RULE: 2
+IMPORT_RULE: 3
+MEDIA_RULE: 4
+FONT_FACE_RULE: 5
+PAGE_RULE: 6
+VARIABLES_RULE: 7
+WEBKIT_KEYFRAMES_RULE: 8
+WEBKIT_KEYFRAME_RULE: 9
+*/
+
 

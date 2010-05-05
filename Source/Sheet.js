@@ -24,11 +24,11 @@ Sheet.prototype = {
 	parser: SheetParser.CSS,
 	
 	initialize: function(cssText){
-		console.group("Sheet initialize");
+		//console.group("Sheet initialize");
 		this.cssText = cssText || '';
 		this.style = this.rules = this.cssRules = this.parser.parse(this.cssText);
 		var self = this;
-		console.groupEnd("Sheet initialize");
+		//console.groupEnd("Sheet initialize");
 	},
 	
 	update: function(){
@@ -37,9 +37,9 @@ Sheet.prototype = {
 			rule,
 			rules = this.style || this.rules || this.cssRules;
 		
-		console.group("update cssText");
-		console.log(rules.selectorText);
-		console.log(rules.cssText);
+		//console.group("update cssText");
+		//console.log(rules.selectorText);
+		//console.log(rules.cssText);
 		
 		while (rule = rules[++i]){
 			if (typeof rule == 'object'){
@@ -53,8 +53,8 @@ Sheet.prototype = {
 			}
 		}
 		
-		console.log(rules.cssText);
-		console.groupEnd("update cssText");
+		//console.log(rules.cssText);
+		//console.groupEnd("update cssText");
 		
 		if (rules.selectorText)
 			return rules.cssText = rules.selectorText + '{' + cssText + '}';

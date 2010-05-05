@@ -9,7 +9,7 @@ function createSheet(raw){
 	
 	div.innerHTML = '<style type="text/css">' + raw + '</style>';
 	
-	console.log(div.innerHTML);
+	//console.log(div.innerHTML);
 	
 	document.getElementsByTagName('html')[0].appendChild(div);
 	
@@ -21,7 +21,7 @@ function createStyle(raw){
 	
 	div.innerHTML = '<div style="' + raw + '"></div>';
 	
-	console.log(div.innerHTML);
+	//console.log(div.innerHTML);
 	
 	return { style:div.firstChild.style };
 }

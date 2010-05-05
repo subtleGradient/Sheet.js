@@ -10,88 +10,104 @@ SheetParser.CSS = {};
 (function(X){
 	
 	X.parse = function(cssText){
-		cssText = String(cssText);
-		
 		var found,
 			cssRule,
 			cssRules = {length:0},
 			keyIndex = -1,
-			regex = this.parser;
+			regex = this.parser,
+			names = X.parser.names;
+		
+		cssRules.cssText = cssText = String(cssText);
 		
 		regex.lastIndex = 0;
-		
-		cssRules.cssText = cssText;
-		
 		while ((found = regex.exec(cssText))){
-			cssRules[cssRules.length++] = cssRule = {};
-			
-			// cssRule.raw = found;
-			cssRule.cssText = found[12];
-			cssRule.selectorText = found[14];
-			
-			cssRule.style = {length:0};
-			cssRule.style.cssText = found[16];
-			
-			if (found[17]) {
-				delete cssRule.style;
-				cssRules[++keyIndex] = found[18];
-				cssRules.length = keyIndex + 1;
-				cssRules[found[18]] = found[19];
-			} else keyIndex = -1;
+			if (found[names._key]){
+				console.log(found);
+				
+				cssRules[cssRules.length++] = found[names._key];
+				cssRules[found[names._key]] = found[names._value];
+				
+			} else {
+				cssRules[cssRules.length++] = cssRule = {};
+				for (var i = -1, l=names.length; i < l; ++i){
+					if (!found[i]) continue;
+					cssRule[names[i-1]] = found[i];
+				}
+			}
 			
 			// avoid an infinite loop on zero-length keys
-			if (regex.lastIndex == cssRule.index) ++ regex.lastIndex;
+			if (regex.lastIndex == found.index) ++ regex.lastIndex;
 		}
 		
 		for (var i = -1, l=cssRules.length; i < l; ++i){
-			if (!cssRules[i] || !cssRules[i].style || !cssRules[i].style.cssText) continue;
-			cssRules[i].style = X.parse(cssRules[i].style.cssText);
+			if (!cssRules[i] || !cssRules[i].style_cssText) continue;
+			console.group(cssRules[i].style_cssText);
+			cssRules[i].style = X.parse(cssRules[i].style_cssText);
+			console.log(cssRules[i].style)
+			console.groupEnd(cssRules[i].style_cssText);
 		}
 		
 		return cssRules;
 	};
 	
-	X.at   = x(/\s* @(\w+) (?: \s+ ([^;{]+) | \s* )/);
-	X.atRule   = x([X.at, ';']);
-	X.keyValue = x(/\s* ([-a-zA-Z0-9]+) : \s* (.*?) (?: ; | (?=\}) | $ )/);
-	X.comment  = x(/\/\* \s* ( (?: [^*] | \*(?!\/) )* ) \s* \*\//);
+	(X.at = x(/\s* (@\w+) \s+ ( [^;{]* )/)).names = 
+	[              'kind',    'name'];
 	
-	X.selector = x(/\s* ([^\{}]+?) \s*/);
-	X.block    = x(/\{ \s* ( (?: [^}] | \{[^}]*\} )* ) \s* \}/);
+	X.atRule = x([X.at, ';']);
 	
-	X.selectorBlock = x([X.selector, X.block], 1);
-	X.atBlock  = x([X.at, X.block], 1);
+	(X.keyValue = x(/\s* ([-a-zA-Z0-9]+) : \s* (.*?) (?: ; | (?=\}) | $ )/)).names = 
+	[                    '_key',               '_value'];
 	
-	var or = '|';
+	(X.comment = x(/\/\* \s* ( (?: [^*] | \*(?!\/) )* ) \s* \*\//)).names = 
+	[                        'comment'];
+	
+	(X.selector = x(/\s* ((\d+%)|[^\{}]+?) \s*/)).names = 
+	[                    'selectorText','keyText'];
+	
+	(X.block = x(/\{ \s* ( (?: [^}] | \{   (?: [^}] | \{   (?: [^}] | \{   (?: [^}] | \{[^}]*\} )*   \} )*   \} )*   \} )* ) \s* \}/)).names = 
+	[                    'style_cssText'];
+	
+	X.selectorBlock = x([X.selector, X.block])
+	
+	X.atBlock = x([X.at, X.block]);
+	
+	var OR = '|';
 	
 	X.parser = x([
-		x(X.comment, 1),
-		or,
-		x(X.atRule, 1),
-		or,
-		x(X.atBlock, 1),
-		or,
-		x(X.selectorBlock, 1),
-		or,
-		x(X.keyValue, 1)
-	]);
+		x(X.comment),
+		OR,
+		x(X.atRule),
+		OR,
+		x(X.atBlock),
+		OR,
+		x(X.selectorBlock),
+		OR,
+		x(X.keyValue)
+	],'cssText');
 	
-	function not(regex){
-		regex = regex.source || ''+regex;
-		return "(?!" + regex + ").";
-	}
-	
-	function x(regex, shouldGroup){
+	function x(regex, group){
 		// console.log(regex);
 		if (regex.source) regex = [regex];
-		var i, source = '', this_source;
-		for (i = 0; i < regex.length; ++i){
-			if (!regex[i]) continue;
+		
+		var names = [], i, source = '', this_source;
+		
+		//console.log(names)
+		for (i = 0; i < regex.length; ++i){ if (!regex[i]) continue;
 			this_source = regex[i].source || ''+regex[i];
-			source += (shouldGroup?'(':'') + this_source.replace(/\s/g,'') + (shouldGroup?')':'');
+			if (this_source == OR) source += OR;
+			else {
+				source += (group?'(':'') + this_source.replace(/\s/g,'') + (group?')':'');
+				if (group) names.push(group);
+			}
+			if (regex[i].names)	names = names.concat(regex[i].names);
+			//console.log(names);
 		}
 		// console.log(source);
-		return new RegExp(source,'gm');
+		regex = new RegExp(source,'gm');
+		for (var i = -1; i < names.length; ++i) names[names[i]] = i + 1; // [key] → 1
+		regex.names = names; // [1] → key
+		// console.log(names);
+		return regex;
 	};
 	X.combineRegex = x;
 	
@@ -101,4 +117,3 @@ SheetParser.CSS = {};
 
 if (typeof exports == 'undefined') var exports = this;
 exports.SheetParser = SheetParser;
-
