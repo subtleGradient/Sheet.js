@@ -49,3 +49,4 @@ Advanced ClientSide Namespacing
 If you need to move Sheet.js to its own custom namespace simply define a global `exports` object before loading Sheet.js. Sheet.js will see that object, assume that it's in a CommonJS environment and then attach itself onto that object instead of including itself globally.
 
 You really shouldn't need to do that.
+But isn't it great to know you could?
