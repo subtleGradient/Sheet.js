@@ -21,8 +21,9 @@ SheetParser.CSS = {};
 		
 		regex.lastIndex = 0;
 		while ((found = regex.exec(cssText))){
+			//console.log(found);
+			
 			if (found[names._key]){
-				console.log(found);
 				
 				cssRules[cssRules.length++] = found[names._key];
 				cssRules[found[names._key]] = found[names._value];
@@ -34,6 +35,7 @@ SheetParser.CSS = {};
 					cssRule[names[i-1]] = found[i];
 				}
 			}
+			//console.log(cssRule);
 			
 			// avoid an infinite loop on zero-length keys
 			if (regex.lastIndex == found.index) ++ regex.lastIndex;
@@ -41,16 +43,26 @@ SheetParser.CSS = {};
 		
 		for (var i = -1, l=cssRules.length; i < l; ++i){
 			if (!cssRules[i] || !cssRules[i].style_cssText) continue;
-			console.group(cssRules[i].style_cssText);
+			//console.group(cssRules[i].style_cssText);
+			
 			cssRules[i].style = X.parse(cssRules[i].style_cssText);
-			console.log(cssRules[i].style)
-			console.groupEnd(cssRules[i].style_cssText);
+			
+			for (var rulesAdded = -1, r = -1, cssRule; cssRule = cssRules[i].style[++r];){
+				//console.log('add cssRule from style to cssRules?',cssRule)
+				if (typeof cssRule == 'string') continue;
+				cssRules[i][r] = (cssRules[i].cssRules || (cssRules[i].cssRules = {}))[++ rulesAdded]  = cssRule;
+				cssRules[i].cssRules.length = rulesAdded + 1;
+			}
+			
+			//console.log('style',cssRules[i].style);
+			//console.log('cssRules',cssRules[i].cssRules);
+			//console.groupEnd(cssRules[i].style_cssText);
 		}
 		
 		return cssRules;
 	};
 	
-	(X.at = x(/\s* (@\w+) \s+ ( [^;{]* )/)).names = 
+	(X.at = x(/\s* (@[-a-zA-Z0-9]+) \s+ ( [^;{]* )/)).names = 
 	[              'kind',    'name'];
 	
 	X.atRule = x([X.at, ';']);
@@ -64,10 +76,10 @@ SheetParser.CSS = {};
 	(X.selector = x(/\s* ((\d+%)|[^\{}]+?) \s*/)).names = 
 	[                    'selectorText','keyText'];
 	
-	(X.block = x(/\{ \s* ( (?: [^}] | \{   (?: [^}] | \{   (?: [^}] | \{   (?: [^}] | \{[^}]*\} )*   \} )*   \} )*   \} )* ) \s* \}/)).names = 
+	(X.block = x(/\{ \s* ( (?: [^{}] | \{   (?: [^{}] | \{   (?: [^{}] | \{   (?: [^{}] | \{[^{}]*\} )*   \} )*   \} )*   \} )* ) \s* \}/)).names = 
 	[                    'style_cssText'];
 	
-	X.selectorBlock = x([X.selector, X.block])
+	X.selectorBlock = x([X.selector, X.block]);
 	
 	X.atBlock = x([X.at, X.block]);
 	
@@ -76,9 +88,9 @@ SheetParser.CSS = {};
 	X.parser = x([
 		x(X.comment),
 		OR,
-		x(X.atRule),
-		OR,
 		x(X.atBlock),
+		OR,
+		x(X.atRule),
 		OR,
 		x(X.selectorBlock),
 		OR,

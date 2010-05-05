@@ -4,6 +4,11 @@ function normalizeCSSText(string){
 	return String(string).replace(/[ \t\n]+/g,'').replace(/;($|(?=}))/g,'');
 }
 function matchesMock(actual, expected, errorMessage){
+	if (typeof actual == 'undefined' && expected != null){
+		ok(actual, errorMessage + ' is undefined')
+		return;
+	}
+	
 	if (typeof expected == "string"){
 		equal(normalizeCSSText(actual), normalizeCSSText(expected), errorMessage);
 		return;
@@ -53,7 +58,7 @@ API ["DOM styleSheet"] = function(newSheet){
 		ok(sheet, "must actually create a sheet");
 		// console.log(sheet);
 		
-		console.log(sheet.cssRules[0], WEBKIT_ANIMATION_MOCK_1.parsed.cssRules[0])
+		//console.log(sheet.cssRules[0], WEBKIT_ANIMATION_MOCK_1.parsed.cssRules[0])
 		matchesMock(sheet, WEBKIT_ANIMATION_MOCK_1.parsed)
 	})
 	
@@ -206,7 +211,7 @@ var WEBKIT_ANIMATION_MOCK_1 = {
 						}
 					},
 					1:{//WebKitCSSKeyframeRule
-						type:9,
+						// type:9,
 						cssText: "100% { background-color: green; }",
 						keyText: "100%",
 						style: {
@@ -231,7 +236,7 @@ var WEBKIT_ANIMATION_MOCK_1 = {
 					}
 				},
 				1:{//WebKitCSSKeyframeRule
-					type:9,
+					// type:9,
 					cssText: "100% { background-color: green; }",
 					keyText: "100%",
 					style: {
