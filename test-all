@@ -1,0 +1,11 @@
+
+echo "Narwhal"
+js Test/run.js
+
+echo "Node.js"
+node Test/run.js
+
+echo "Browser"
+refresh_webkit
+# open Test/run.html
+

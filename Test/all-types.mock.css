@@ -1,0 +1,103 @@
+/*comment*/
+
+#selector{property: value;}
+
+#nested{#rules{}}
+
+/*
+block { causta: "}" + ({7} * '\'') }
+*/
+
+@import url.css;
+@import "url.css";
+@import url(url.css);
+@import url("url.css");
+@import url("url.css") projection, tv;
+
+@charset "ISO-8859-1";
+
+@media screen {
+	#selector {}
+}
+
+@-webkit-keyframes pulse {
+	0% { }
+	100% { }
+}
+
+@foo;
+@foo{}
+
+key:value;
+-key:val\;ue;
+
+#nested {
+	/*comment*/
+
+	#selector{property: value;}
+
+	#nested{#rules{}}
+
+	/*
+	block { causta: "}" + ({7} * '\'') }
+	*/
+
+	@import url.css;
+	@import "url.css";
+	@import url(url.css);
+	@import url("url.css");
+	@import url("url.css") projection, tv;
+
+	@charset "ISO-8859-1";
+
+	@media screen {
+		#selector {}
+	}
+
+	@-webkit-keyframes pulse {
+		0% { }
+		100% { }
+	}
+
+	@foo;
+	@foo{}
+
+	key:value;
+	-key:val\;ue;
+}
+
+@nested {
+	/*comment*/
+
+	#selector{property: value;}
+
+	#nested{#rules{}}
+
+	/*
+	block { causta: "}" + ({7} * '\'') }
+	*/
+
+	@import url.css;
+	@import "url.css";
+	@import url(url.css);
+	@import url("url.css");
+	@import url("url.css") projection, tv;
+
+	@charset "ISO-8859-1";
+
+	@media screen {
+		#selector {}
+	}
+
+	@-webkit-keyframes pulse {
+		0% { }
+		100% { }
+	}
+
+	@foo;
+	@foo{}
+
+	key:value;
+	-key:val\;ue;
+}
+
