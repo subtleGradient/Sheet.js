@@ -1,8 +1,13 @@
 // -*- Mode: JavaScript QUnit; tab-width: 4; -*-
 
 module ("document.styleSheets");
-API ["DOM styleSheet"] (createSheet);
-API ["DOM style attribute"] (createStyle);
+
+exports ["test document.styleSheets DOM styleSheet"] = API ["DOM styleSheet"] (createSheet);
+exports ["test document.styleSheets DOM style attribute"] = API ["DOM style attribute"] (createStyle);
+
+run(exports); // QUnit
+
+
 
 function createSheet(raw){
 	var div = document.createElement('div');
@@ -25,3 +30,4 @@ function createStyle(raw){
 	
 	return { style:div.firstChild.style };
 }
+

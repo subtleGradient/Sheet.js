@@ -1,46 +1,28 @@
 // -*- Mode: JavaScript QUnit; tab-width: 4; -*-
 
-function normalizeCSSText(string){
-	return String(string).replace(/[ \t\n]+/g,'').replace(/;($|(?=}))/g,'');
-}
-function matchesMock(actual, expected, errorMessage){
-	if (typeof actual == 'undefined' && expected != null){
-		ok(actual, errorMessage + ' is undefined')
-		return;
-	}
-	
-	if (typeof expected == "string"){
-		equal(normalizeCSSText(actual), normalizeCSSText(expected), errorMessage);
-		return;
-	}
-	
-	if (typeof expected != "object"){
-		equal(actual, expected, errorMessage);
-		return;
-	}
-	
-	equal("length" in actual, "length" in expected, errorMessage + " same length");
-	if ("length" in expected && + expected.length){
-		equal(actual.length, expected.length, errorMessage);
-	}
-	
-	if (typeof expected == 'string')
-		equal(normalizeCSSText(actual), normalizeCSSText(expected), errorMessage);
-	
-	if (typeof expected == 'object')
-	for (var property in expected){
-		matchesMock(actual[property], expected[property], property);
-	}
-}
+// Bootstrap testing
+if (typeof assert == 'undefined' && typeof require != 'undefined') {
+	require.paths.push('Test/lib');
+	var assert = require('assert');
+	var ok = assert.ok;
+	var equal = assert.equal;
 
-
+	if (typeof	test === 'undefined')
+		var		test = require('SG-Assert-Helpers')
+		.		test;
+}
 
 if (typeof API != 'object') var API = {};
+if (typeof exports == 'undefined') var exports = this;
+else API = exports;
+
+
 API ["DOM styleSheet"] = function(newSheet){
+	var I = {};
 	
-	test ("DOM styleSheet: Exists",function(){ok( newSheet )})
+	I ["test DOM styleSheet: Exists"] = function(){ok( newSheet )}
 	
-	test ('DOM styleSheet: new sheet conforms to basic api',function(){
+	I ["test DOM styleSheet: new sheet conforms to basic api"] = function(){
 		
 		var sheet = newSheet(SHEET_MOCK_1.raw);
 		
@@ -49,9 +31,9 @@ API ["DOM styleSheet"] = function(newSheet){
 		
 		//console.log(sheet, SHEET_MOCK_1.parsed)
 		matchesMock(sheet, SHEET_MOCK_1.parsed)
-	})
+	}
 	
-	test ('DOM styleSheet: webkit animation',function(){
+	I ["test DOM styleSheet: webkit animation"] = function(){
 		
 		var sheet = newSheet(WEBKIT_ANIMATION_MOCK_1.raw);
 		
@@ -60,9 +42,9 @@ API ["DOM styleSheet"] = function(newSheet){
 		
 		//console.log(sheet.cssRules[0], WEBKIT_ANIMATION_MOCK_1.parsed.cssRules[0])
 		matchesMock(sheet, WEBKIT_ANIMATION_MOCK_1.parsed)
-	})
+	}
 	
-	test ('DOM styleSheet: updating values updates cssText',function(){
+	I ["test DOM styleSheet: updating values updates cssText"] = function(){
 		
 		var style = '#selector{color:green}';
 		var sheet = newSheet(style);
@@ -77,25 +59,26 @@ API ["DOM styleSheet"] = function(newSheet){
 		
 		matchesMock(sheet.cssRules[0].cssText.toString(), '#selector{color:blue}');
 		matchesMock(''+sheet.cssRules[0].cssText, '#selector{color:blue}');
-	})
+	}
 	
+	return I;
 };
 
-
 API ["DOM style attribute"] = function(newStyle){
+	var I = {};
 	
-	test ('DOM style attribute: Exists',function(){ok( newStyle )})
+	I ["test DOM style attribute: Exists"] = function(){ok( newStyle )}
 	
-	test ('DOM style attribute: new sheet conforms to basic api',function(){
+	I ["test DOM style attribute: new sheet conforms to basic api"] = function(){
 		
 		var sheet = newStyle(STYLE_MOCK_1.raw);
 		ok(sheet, "must actually create a style");
 		//console.log(sheet);
 		
 		matchesMock(sheet, STYLE_MOCK_1.parsed)
-	})
+	}
 	
-	test ('DOM style attribute: updating values updates cssText',function(){
+	I ["test DOM style attribute: updating values updates cssText"] = function(){
 		
 		var style = 'color:green';
 		var sheet = newStyle(style);
@@ -111,8 +94,9 @@ API ["DOM style attribute"] = function(newStyle){
 		matchesMock(sheet.style.cssText.toString(), 'color:blue');
 		matchesMock(''+sheet.style.cssText, 'color:blue');
 		
-	})
+	}
 	
+	return I;
 };
 
 
@@ -253,17 +237,14 @@ var WEBKIT_ANIMATION_MOCK_1 = {
 	
 };
 
-/*
-UNKNOWN_RULE: 0
-STYLE_RULE: 1
-CHARSET_RULE: 2
-IMPORT_RULE: 3
-MEDIA_RULE: 4
-FONT_FACE_RULE: 5
-PAGE_RULE: 6
-VARIABLES_RULE: 7
-WEBKIT_KEYFRAMES_RULE: 8
-WEBKIT_KEYFRAME_RULE: 9
-*/
 
 
+// Local testing sugar
+
+if (typeof	normalizeCSSText === 'undefined')
+	var		normalizeCSSText = require('SG-Assert-Helpers')
+	.		normalizeCSSText;
+
+if (typeof	matchesMock === 'undefined')
+	var		matchesMock = require('SG-Assert-Helpers')
+	.		matchesMock;

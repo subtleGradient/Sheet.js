@@ -1,8 +1,15 @@
 /*
 ---
+name: SheetParser.CSS
 proivides: SheetParser.CSS
+description: ""
+requires: []
+
+author: Thomas Aylott
+license: MIT Style
 ...
 */
+
 if (typeof SheetParser == 'undefined') SheetParser = {};
 SheetParser.CSS = {};
 
@@ -126,6 +133,7 @@ SheetParser.CSS = {};
 	
 })(SheetParser.CSS);
 
-
+/*<CommonJS>*/
 if (typeof exports == 'undefined') var exports = this;
 exports.SheetParser = SheetParser;
+/*</CommonJS>*/

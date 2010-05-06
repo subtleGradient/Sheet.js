@@ -1,14 +1,29 @@
 // -*- Mode: JavaScript; tab-width: 4; -*-
 /*
 ---
-name: Sheet
+name: Sheet.js
 proivides: Sheet
+description: ""
+
 requires: SheetParser.CSS
+
+author: Thomas Aylott
+license: MIT Style
 ...
 */
-if (typeof exports == 'undefined') var exports = this;
+
+/*<CommonJS>*/
+var UNDEFINED = 'undefined';
+if (typeof exports == UNDEFINED) var exports = this;
+if (typeof require != UNDEFINED)
+if (typeof   SheetParser == UNDEFINED) 
+	var      SheetParser = 
+	require('SheetParser.CSS')
+	.        SheetParser;
 
 exports.Sheet = Sheet;
+/*</CommonJS>*/
+
 
 function Sheet(cssText){
 	if (this instanceof Sheet) this.initialize(cssText);
