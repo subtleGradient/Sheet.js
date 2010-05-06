@@ -36,12 +36,16 @@ ClientSide / Browser Usage
 
 	var myStyleSheet = new Sheet("#selector { color:blue }");
 	myStyleSheet.cssRules[0].style.color; // blue
+	// etc…
 
 ServerSide / CommonJS Usage
 
+	require.paths.push('path/to/Sheet.js/Source'); // You might not need this
 	var Sheet = require('Sheet').Sheet;
+	
 	var myStyleSheet = new Sheet("#selector { color:blue }");
 	myStyleSheet.cssRules[0].style.color; // blue
+	// etc…
 
 
 Advanced ClientSide Namespacing
