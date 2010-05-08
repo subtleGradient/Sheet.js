@@ -9,7 +9,7 @@ requires  : SheetParser.CSS
 
 author    : Thomas Aylott
 copyright : © 2010 Thomas Aylott
-license   : MIT Style
+license   : MIT
 ...
 */
 
