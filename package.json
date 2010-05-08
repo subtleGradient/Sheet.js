@@ -1,0 +1,69 @@
+{
+
+	"name": "Sheet.js",
+	"version": "0.0.3alpha",
+
+	"description": "100% DOM-less JavaScript implementation of the styleSheets, cssRule & style APIs\nSupports custom and browser-incompatible CSS syntax like nested rules",
+	"keywords": [
+		"CSS",
+		"SASS",
+		"sassy",
+		"styleSheet",
+		"cssRule",
+		"style",
+		"parse"
+	],
+
+	"implements": [
+		"W3C/DOM/styleSheet/2.0",
+		"W3C/DOM/cssRule/2.0",
+		"W3C/DOM/style/2.0",
+		"WebKit/CSS/Animation/1.0"
+	],
+
+	"authors": ["Thomas Aylott"],
+	"contributors": [
+		{
+			"name": "Thomas Aylott",
+			"email": "thomas@mootools.net",
+			"web": "http://subtlegradient.com"
+		}
+	],
+
+	"copyright":  "© 2010 Thomas Aylott",
+	"license": "MIT License",
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "http://creativecommons.org/licenses/MIT/"
+		}
+	],
+
+
+	"repositories": [{
+		"type": "git",
+		"url": "http://github.com/subtleGradient/Sheet.js/"
+	}],
+	"bugs": {
+		"web": "http://github.com/subtleGradient/Sheet.js/issues"
+	},
+
+
+	"directories": {
+		"src": "Source",
+		"lib": "lib",
+		"doc": ".",
+		"test": "Test"
+	},
+
+	"scripts": {
+		"Sheet": "Source/Sheet.js",
+		"SheetParser.CSS": "Source/SheetParser.CSS.js"
+	},
+
+	"sources": [
+		"Source/Sheet.js",
+		"Source/SheetParser.CSS.js"
+	]
+
+}
