@@ -1,7 +1,7 @@
 /*
 ---
 name      : SheetParser.CSS
-proivides : SheetParser.CSS
+provides : SheetParser.CSS
 version   : 0.0.3alpha
 
 author    : Thomas Aylott

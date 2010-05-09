@@ -2,7 +2,7 @@
 /*
 ---
 name      : Sheet.js
-proivides : Sheet
+provides : Sheet
 version   : 0.0.3alpha
 
 requires  : SheetParser.CSS
