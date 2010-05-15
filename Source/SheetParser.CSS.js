@@ -13,6 +13,10 @@ provides : SheetParser.CSS
 if (typeof SheetParser == 'undefined') SheetParser = {};
 SheetParser.CSS = {};
 
+/*<CommonJS>*/
+if (typeof exports == 'undefined') var exports = this;
+exports.SheetParser = SheetParser;
+/*</CommonJS>*/
 
 (function(X){
 	
@@ -132,8 +136,3 @@ SheetParser.CSS = {};
 	
 	
 })(SheetParser.CSS);
-
-/*<CommonJS>*/
-if (typeof exports == 'undefined') var exports = this;
-exports.SheetParser = SheetParser;
-/*</CommonJS>*/
