@@ -6,11 +6,14 @@ license: MIT Style
 ...
 */
 
-var assert = QUnit;
+(function(exports){
 
-function run(tests){
+var assert = QUnit;
+var hasOwnProperty = {}.hasOwnProperty;
+
+exports.run = function(tests){
 	for (var name in tests){
-		if (!tests.hasOwnProperty(name)) continue;
+		if (!hasOwnProperty.call(tests,name)) continue;
 		if (!/^test/.test(name)) continue;
 		if (typeof tests[name] === 'function'){
 			test(name.replace(/^test[\s_-]*/,''), tests[name]);
@@ -21,3 +24,4 @@ function run(tests){
 	}
 }
 
+})(typeof exports != 'undefined' ? exports : this);

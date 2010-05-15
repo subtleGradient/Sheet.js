@@ -7,6 +7,7 @@ license: MIT Style
 ...
 */
 
+/*CommonJS>*/
 if (typeof assert == 'undefined' && typeof require != 'undefined') {
 	var assert = require('assert');
 	var ok = assert.ok;
@@ -16,9 +17,7 @@ if (typeof assert == 'undefined' && typeof require != 'undefined') {
 		var    print = require('sys')
 		.      print;
 }
-if (typeof exports == 'undefined') var exports = this;
-exports.normalizeCSSText = normalizeCSSText;
-exports.matchesMock = matchesMock;
+/*</CommonJS>*/
 
 function normalizeCSSText(string){
 	return String(string).replace(/[ \t\n]+/g,'').replace(/;($|(?=}))/g,'');
@@ -55,13 +54,39 @@ function matchesMock(actual, expected, errorMessage){
 	}
 }
 
-if (typeof test === 'undefined') var test = function(name,fn){
-	print(name);
-	fn(require('assert'));
-	print("\n");
-};
-exports.test = test;
+if (typeof test === 'undefined'){
+	
+	/*<QUnit>*/
+	if (typeof QUnit != 'undefined'){
+		var test = QUnit.test;
+	} else 
+	/*</QUnit>*/
+	
+	/*<CommonJS>*/
+	{
+		var test = function(name,fn){
+			print(name);
+			fn(require('assert'));
+			print("\n");
+		};
+	}
+	/*</CommonJS>*/
+}
 
+/*<QUnit>*/
 if (typeof assert === 'undefined') 
-if (typeof QUnit != 'undefined') 
-var assert = QUnit;
+	if (typeof QUnit != 'undefined') 
+		var assert = QUnit;
+/*</QUnit>*/
+
+
+
+/*<Provides>*/
+if (typeof exports == 'undefined') var exports = this;
+
+exports.normalizeCSSText = normalizeCSSText;
+exports.matchesMock = matchesMock;
+
+exports.test = test;
+exports.assert = assert;
+/*</Provides>*/
