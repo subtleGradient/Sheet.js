@@ -1,15 +1,13 @@
-// -*- Mode: JavaScript; tab-width: 4; -*-
 /*
 ---
-name      : Sheet.js
-provides : Sheet
-version   : 0.0.3alpha
+name    : Sheet
 
-requires  : SheetParser.CSS
-
-author    : Thomas Aylott
+authors   : Thomas Aylott
 copyright : © 2010 Thomas Aylott
 license   : MIT
+
+provides : Sheet
+requires : SheetParser.CSS
 ...
 */
 

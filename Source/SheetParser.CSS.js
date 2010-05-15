@@ -1,12 +1,12 @@
 /*
 ---
-name      : SheetParser.CSS
-provides : SheetParser.CSS
-version   : 0.0.3alpha
+name    : SheetParser.CSS
 
-author    : Thomas Aylott
+authors   : Thomas Aylott
 copyright : © 2010 Thomas Aylott
 license   : MIT
+
+provides : SheetParser.CSS
 ...
 */
 
