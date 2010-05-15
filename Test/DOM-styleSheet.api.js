@@ -1,16 +1,32 @@
 // -*- Mode: JavaScript QUnit; tab-width: 4; -*-
 
-// Bootstrap testing
+// Requires
+
+/*<CommonJS>*/
 if (typeof assert == 'undefined' && typeof require != 'undefined') {
 	require.paths.push('Test/lib');
 	var assert = require('assert');
-	var ok = assert.ok;
-	var equal = assert.equal;
 
 	if (typeof	test === 'undefined')
 		var		test = require('SG-Assert-Helpers')
 		.		test;
 }
+/*</CommonJS>*/
+
+var ok = assert.ok;
+var equal = assert.equal;
+
+// Local testing sugar
+
+if (typeof	normalizeCSSText === 'undefined')
+	var		normalizeCSSText = require('SG-Assert-Helpers')
+	.		normalizeCSSText;
+
+if (typeof	matchesMock === 'undefined')
+	var		matchesMock = require('SG-Assert-Helpers')
+	.		matchesMock;
+
+// API
 
 if (typeof API != 'object') var API = {};
 if (typeof exports == 'undefined') var exports = this;
@@ -237,14 +253,3 @@ var WEBKIT_ANIMATION_MOCK_1 = {
 	
 };
 
-
-
-// Local testing sugar
-
-if (typeof	normalizeCSSText === 'undefined')
-	var		normalizeCSSText = require('SG-Assert-Helpers')
-	.		normalizeCSSText;
-
-if (typeof	matchesMock === 'undefined')
-	var		matchesMock = require('SG-Assert-Helpers')
-	.		matchesMock;
