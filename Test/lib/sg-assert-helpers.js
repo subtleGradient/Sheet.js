@@ -20,7 +20,7 @@ if (typeof assert == 'undefined' && typeof require != 'undefined') {
 /*</CommonJS>*/
 
 function normalizeCSSText(string){
-	return String(string).replace(/[ \t\n]+/g,'').replace(/;($|(?=}))/g,'');
+	return String(string).toLowerCase().replace(/[ \t\n]+/g,'').replace(/;($|(?=}))/g,'');
 }
 
 function matchesMock(actual, expected, errorMessage){
