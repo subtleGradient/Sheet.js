@@ -13,7 +13,7 @@ if (typeof assert == 'undefined' && typeof require != 'undefined') {
 	var ok = assert.ok;
 	var equal = assert.equal;
 	
-	if (typeof print === 'undefined') 
+	if (typeof print == 'undefined') 
 		var    print = require('sys')
 		.      print;
 }
@@ -54,7 +54,7 @@ function matchesMock(actual, expected, errorMessage){
 	}
 }
 
-if (typeof test === 'undefined'){
+if (typeof test == 'undefined'){
 	
 	/*<QUnit>*/
 	if (typeof QUnit != 'undefined'){
@@ -74,7 +74,7 @@ if (typeof test === 'undefined'){
 }
 
 /*<QUnit>*/
-if (typeof assert === 'undefined') 
+if (typeof assert == 'undefined') 
 	if (typeof QUnit != 'undefined') 
 		var assert = QUnit;
 /*</QUnit>*/
