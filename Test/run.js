@@ -1,8 +1,10 @@
 
 exports["test Sheet"] = require("./Sheet.test");
 
-if (require.main == module.id)
-	require("os").exit(require("test/runner").run(exports));
-
-if ('.' == module.id)
+// node.js
+if (typeof process != 'undefined') 
 	process.exit(require("sg-testrunner").run(exports));
+
+// Narwhal
+if (require.main == module)
+	require("os").exit(require("test/runner").run(exports));
