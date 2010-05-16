@@ -20,57 +20,60 @@ exports.SheetParser = SheetParser;
 
 (function(X){
 	
+	X.camelCase = function(string){
+		return String(string).replace(camelCaseSearch, camelCaseReplace);
+	};
+	var camelCaseSearch = /-\D/g;
+	function camelCaseReplace(match){
+		return match.charAt(1).toUpperCase();
+	}
+	
 	X.parse = function(cssText){
 		var found,
-			cssRule,
-			cssRules = {length:0},
+			rule,
+			rules = {length:0},
 			keyIndex = -1,
 			regex = this.parser,
-			names = X.parser.names;
+			names = X.parser.names,
+			i,l,r,
+			ruleCount;
 		
-		cssRules.cssText = cssText = String(cssText);
+		rules.cssText = cssText = String(cssText);
 		
 		regex.lastIndex = 0;
 		while ((found = regex.exec(cssText))){
-			//console.log(found);
-			
-			if (found[names._key]){
-				
-				cssRules[cssRules.length++] = found[names._key];
-				cssRules[found[names._key]] = found[names._value];
-				
-			} else {
-				cssRules[cssRules.length++] = cssRule = {};
-				for (var i = -1, l=names.length; i < l; ++i){
-					if (!found[i]) continue;
-					cssRule[names[i-1]] = found[i];
-				}
-			}
-			//console.log(cssRule);
-			
 			// avoid an infinite loop on zero-length keys
 			if (regex.lastIndex == found.index) ++ regex.lastIndex;
-		}
-		
-		for (var i = -1, l=cssRules.length; i < l; ++i){
-			if (!cssRules[i] || !cssRules[i].style_cssText) continue;
-			//console.group(cssRules[i].style_cssText);
 			
-			cssRules[i].style = X.parse(cssRules[i].style_cssText);
-			
-			for (var rulesAdded = -1, r = -1, cssRule; cssRule = cssRules[i].style[++r];){
-				//console.log('add cssRule from style to cssRules?',cssRule)
-				if (typeof cssRule == 'string') continue;
-				cssRules[i][r] = (cssRules[i].cssRules || (cssRules[i].cssRules = {}))[++ rulesAdded]  = cssRule;
-				cssRules[i].cssRules.length = rulesAdded + 1;
+			// key:value
+			if (found[names._key]){
+				rules[rules.length ++] = found[names._key];
+				rules[found[names._key]] = found[names._value];
+				rules[X.camelCase(found[names._key])] = found[names._value];
+				continue;
 			}
 			
-			//console.log('style',cssRules[i].style);
-			//console.log('cssRules',cssRules[i].cssRules);
-			//console.groupEnd(cssRules[i].style_cssText);
+			rules[rules.length++] = rule = {};
+			for (i = -1, l = names.length; i < l; ++i){
+				if (!found[i]) continue;
+				rule[names[i-1]] = found[i];
+			}
 		}
 		
-		return cssRules;
+		for (i = -1, l = rules.length; i < l; ++i){
+			if (!rules[i] || !rules[i].style_cssText) continue;
+			
+			rules[i].style = X.parse(rules[i].style_cssText);
+			
+			for (ruleCount = -1, r = -1, rule; rule = rules[i].style[++r];){
+				if (typeof rule == 'string') continue;
+				rules[i][r] = (rules[i].cssRules || (rules[i].cssRules = {}))[++ ruleCount]  = rule;
+				rules[i].cssRules.length = ruleCount + 1;
+				rules[i].rules = rules[i].cssRules;
+			}
+		}
+		
+		return rules;
 	};
 	
 	(X.at = x(/\s* (@[-a-zA-Z0-9]+) \s+ ( [^;{]* )/)).names = 
@@ -109,12 +112,10 @@ exports.SheetParser = SheetParser;
 	],'cssText');
 	
 	function x(regex, group){
-		// console.log(regex);
 		if (regex.source) regex = [regex];
 		
 		var names = [], i, source = '', this_source;
 		
-		//console.log(names)
 		for (i = 0; i < regex.length; ++i){ if (!regex[i]) continue;
 			this_source = regex[i].source || ''+regex[i];
 			if (this_source == OR) source += OR;
@@ -123,13 +124,12 @@ exports.SheetParser = SheetParser;
 				if (group) names.push(group);
 			}
 			if (regex[i].names)	names = names.concat(regex[i].names);
-			//console.log(names);
 		}
-		// console.log(source);
 		regex = new RegExp(source,'gm');
-		for (var i = -1; i < names.length; ++i) names[names[i]] = i + 1; // [key] → 1
-		regex.names = names; // [1] → key
-		// console.log(names);
+		// [key] → 1
+		for (i = -1; i < names.length; ++i) names[names[i]] = i + 1;
+		// [1] → key
+		regex.names = names;
 		return regex;
 	};
 	X.combineRegex = x;
