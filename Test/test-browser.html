@@ -1,0 +1,47 @@
+<!DOCTYPE html><html><head>
+	
+	<meta http-equiv=Content-type content="text/html; charset=utf-8">
+	
+	<link rel=stylesheet href="lib/qunit/qunit/qunit.css" type="text/css" media=screen>
+	<script>exports = {}</script>
+	<script src="lib/qunit/qunit/qunit.js"></script>
+	<script src="lib/sg-assert-helpers.js"></script>
+	<script src="lib/sg-qunit-testrunner.js"></script>
+	
+	<title>Sheet.js Unit Tests</title>
+	<style>
+	h2#qunit-banner.qunit-fail, #qunit-testrunner-toolbar {
+		background-color:#C6F;
+	}
+	ol#qunit-tests li li.fail{
+		border-left-color:#C6F;
+	}
+	ol#qunit-tests li.fail{
+		background-color:#C6F;
+	}
+	</style>
+</head><body>
+	
+	<p>The Sheet.js tests are implementation agnostic. The following section tests the current browser's implementation of <code>document.styleSheets</code> and <code>element.style</code> to show you the differences between the Sheet.js implementation and your current browser.</p>
+	<p><strong>Errors in the following section are expected.</strong> Errors in this section mean that your browser doesn't implement something.</p>
+	
+	<h1 id=qunit-header>This Browser's implementation of <code>document.styleSheets</code> and <code>element.style</code></h1>
+	<h2 id=qunit-userAgent></h2>
+	
+	<h2 id=qunit-banner></h2>
+	<div id=qunit-testrunner-toolbar></div>
+	<ol id=qunit-tests></ol>
+	
+	<!-- API Tests -->
+	<script>exports = {}</script>
+	<script src="DOM-styleSheet.api.js"></script>
+	
+	<!-- Verify API Implementation -->
+	
+	<!-- Use the DOM in the current browser -->
+	<script>exports = this</script>
+	<script src="../Source/Sheet.DOM.js"></script>
+	<script src="document.styleSheets.test.js"></script>
+	
+	<script> QUnit.TestRunner.run(exports) </script>
+</body></html>

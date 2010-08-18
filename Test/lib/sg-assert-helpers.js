@@ -7,24 +7,25 @@ license: MIT Style
 ...
 */
 
+/*CommonJS>*/
 if (typeof assert == 'undefined' && typeof require != 'undefined') {
 	var assert = require('assert');
 	var ok = assert.ok;
 	var equal = assert.equal;
 	
-	if (typeof print === 'undefined') 
+	if (typeof print == 'undefined') 
 		var    print = require('sys')
 		.      print;
 }
-if (typeof exports == 'undefined') var exports = this;
-exports.normalizeCSSText = normalizeCSSText;
-exports.matchesMock = matchesMock;
+/*</CommonJS>*/
 
 function normalizeCSSText(string){
-	return String(string).replace(/[ \t\n]+/g,'').replace(/;($|(?=}))/g,'');
+	return String(string).toLowerCase().replace(/[ \t\n]+/g,'').replace(/;($|(?=}))/g,'');
 }
 
 function matchesMock(actual, expected, errorMessage){
+	if (!errorMessage) errorMessage = "";
+	
 	if (typeof actual == 'undefined' && expected != null){
 		ok(actual, errorMessage + ' is undefined')
 		return;
@@ -42,7 +43,7 @@ function matchesMock(actual, expected, errorMessage){
 	
 	equal("length" in actual, "length" in expected, errorMessage + " same length");
 	if ("length" in expected && + expected.length){
-		equal(actual.length, expected.length, errorMessage);
+		equal(actual.length, expected.length, errorMessage + ".length");
 	}
 	
 	if (typeof expected == 'string')
@@ -55,13 +56,39 @@ function matchesMock(actual, expected, errorMessage){
 	}
 }
 
-if (typeof test === 'undefined') var test = function(name,fn){
-	print(name);
-	fn(require('assert'));
-	print("\n");
-};
-exports.test = test;
+if (typeof test == 'undefined'){
+	
+	/*<QUnit>*/
+	if (typeof QUnit != 'undefined'){
+		var test = QUnit.test;
+	} else 
+	/*</QUnit>*/
+	
+	/*<CommonJS>*/
+	{
+		var test = function(name,fn){
+			print(name);
+			fn(require('assert'));
+			print("\n");
+		};
+	}
+	/*</CommonJS>*/
+}
 
-if (typeof assert === 'undefined') 
-if (typeof QUnit != 'undefined') 
-var assert = QUnit;
+/*<QUnit>*/
+if (typeof assert == 'undefined') 
+	if (typeof QUnit != 'undefined') 
+		var assert = QUnit;
+/*</QUnit>*/
+
+
+
+/*<Provides>*/
+if (typeof exports == 'undefined') exports = this;
+
+exports.normalizeCSSText = normalizeCSSText;
+exports.matchesMock = matchesMock;
+
+exports.test = test;
+exports.assert = assert;
+/*</Provides>*/
