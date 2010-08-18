@@ -1,6 +1,6 @@
 // -*- Mode: JavaScript QUnit; tab-width: 4; -*-
 
-if (typeof exports == 'undefined') var exports = {};
+if (typeof exports == 'undefined') exports = {};
 
 // Test Requirements
 

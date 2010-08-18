@@ -29,16 +29,21 @@ if (typeof	matchesMock == 'undefined')
 // API
 
 if (typeof API != 'object') var API = {};
-if (typeof exports == 'undefined') var exports = this;
+if (typeof exports == 'undefined') exports = this;
 else API = exports;
 
 
 API ["DOM styleSheet"] = function(newSheet){
+	if (!newSheet) throw new Error("API test requires passing a newSheet function");
+	
 	var I = {};
 	
 	I ["test Exists"] = function(){ok( newSheet )}
 	
 	I ["test new sheet conforms to basic api"] = function(){
+		
+		// console.log(newSheet)
+		// console.log(''+newSheet)
 		
 		var sheet = newSheet(CSS_MOCK.raw);
 		if (!sheet.cssRules) sheet.cssRules = sheet.rules;
@@ -80,11 +85,16 @@ API ["DOM styleSheet"] = function(newSheet){
 };
 
 API ["DOM style attribute"] = function(newStyle){
+	if (!newStyle) throw new Error("API test requires passing a newStyle function");
+	
 	var I = {};
 	
 	I ["test Exists"] = function(){ok( newStyle )}
 	
 	I ["test new sheet conforms to basic api"] = function(){
+		
+		// console.log(newStyle)
+		// console.log(''+newStyle)
 		
 		var sheet = newStyle(STYLE_MOCK_1.raw);
 		if (!sheet.cssRules) sheet.cssRules = sheet.rules;

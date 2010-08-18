@@ -1,4 +1,4 @@
-if (typeof exports == 'undefined') var exports = {};
+if (typeof exports == 'undefined') exports = {};
 
 exports ["test Browser Native (document.styleSheets) DOM styleSheet"] = 
 	API ["DOM styleSheet"] (Sheet.DOM.createSheet);
