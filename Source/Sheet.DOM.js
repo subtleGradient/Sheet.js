@@ -10,51 +10,52 @@ license   : MIT
 provides : Sheet.DOM
 ...
 */
+;(function(document,styleSheets){
 
-if (typeof Sheet == 'undefined') var Sheet = {};
-if (Sheet.DOM == null) Sheet.DOM = {};
+if (typeof Sheet == 'undefined') Sheet = {}
+if (Sheet.DOM == null) Sheet.DOM = {}
 
 Sheet.DOM.createSheet = function(raw){
-	var oldLength = document.styleSheets.length;
+	var	oldLength = styleSheets.length
+	,	style
+	,	sheet
 	
 	if (document.createStyleSheet){
-		document.createStyleSheet();
-		document.styleSheets[document.styleSheets.length - 1].cssText = raw;
+		document.createStyleSheet()
+		styleSheets[styleSheets.length - 1].cssText = raw
 	}
 	
-	if (oldLength >= document.styleSheets.length){
-		var style = document.createElement('style');
-		style.setAttribute('type','text/css');
-		style.appendChild(document.createTextNode(raw));
-		document.getElementsByTagName('head')[0].appendChild(style);
+	if (oldLength >= styleSheets.length){
+		style = document.createElement('style')
+		style.setAttribute('type','text/css')
+		style.appendChild(document.createTextNode(raw))
+		document.getElementsByTagName('head')[0].appendChild(style)
 	}
 	
-	if (oldLength >= document.styleSheets.length){
-		var style = document.createElement('div');
-		style.innerHTML = '<style type="text/css">' + raw + '</style>';
-		document.getElementsByTagName('head')[0].appendChild(style);
+	if (oldLength >= styleSheets.length){
+		style = document.createElement('div')
+		style.innerHTML = '<style type="text/css">' + String_escapeHTML.call(raw) + '</style>'
+		document.getElementsByTagName('head')[0].appendChild(style)
 	}
 	
-	if (oldLength >= document.styleSheets.length)
-		throw new Error('no styleSheet added :(');
+	if (oldLength >= styleSheets.length)
+		throw new Error('no styleSheet added :(')
 	
-	var sheet = document.styleSheets[document.styleSheets.length - 1];
-	sheet.cssText = raw;
+	sheet = styleSheets[styleSheets.length - 1]
+	sheet.cssText = raw
 	
-	return sheet;
-};
-
-// Sheet.DOM.createSheet = function(raw){
-// 	var style = document.createElement('style');
-// 	style.setAttribute('type','text/css');
-// 	style.appendChild(document.createTextNode(raw));
-// 	document.getElementsByTagName('head')[0].appendChild(style);
-// 	
-// 	return document.styleSheets[document.styleSheets.length - 1];
-// };
+	return sheet
+}
 
 Sheet.DOM.createStyle = function(raw){
-	var div = document.createElement('div');
-	div.innerHTML = '<div style="' + raw + '"></div>';
-	return { style:div.firstChild.style };
-};
+	var div = document.createElement('div')
+	div.innerHTML = '<p style="' + String_escapeHTML.call(raw) + '"></p>'
+	return {style:div.firstChild.style}
+}
+
+function String_escapeHTML(){
+	return ('' + this).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;')
+}
+
+
+}(document, document.styleSheets));

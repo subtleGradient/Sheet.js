@@ -84,7 +84,7 @@ if (typeof assert == 'undefined')
 
 
 /*<Provides>*/
-if (typeof exports == 'undefined') var exports = this;
+if (typeof exports == 'undefined') exports = this;
 
 exports.normalizeCSSText = normalizeCSSText;
 exports.matchesMock = matchesMock;

@@ -115,7 +115,7 @@ var QUnit = {
 				}
 
 				testEnvironment.setup.call(testEnvironment);
-			} catch(e) {
+			} catch(e) {setTimeout(function(){throw e},0);
 				QUnit.ok( false, "Setup failed on " + name + ": " + e.message );
 			}
 
@@ -125,7 +125,7 @@ var QUnit = {
 
 			try {
 				callback.call(testEnvironment);
-			} catch(e) {
+			} catch(e) {setTimeout(function(){throw e},0);
 				fail("Test " + name + " died, exception and test follows", e, callback);
 				QUnit.ok( false, "Died on test #" + (config.assertions.length + 1) + ": " + e.message );
 				// else next test will carry the responsibility
@@ -142,13 +142,13 @@ var QUnit = {
 			try {
 				checkPollution();
 				testEnvironment.teardown.call(testEnvironment);
-			} catch(e) {
+			} catch(e) {setTimeout(function(){throw e},0);
 				QUnit.ok( false, "Teardown failed on " + name + ": " + e.message );
 			}
 
 			try {
 				QUnit.reset();
-			} catch(e) {
+			} catch(e) {setTimeout(function(){throw e},0);
 				fail("reset() failed, following Test " + name + ", exception and reset fn follows", e, reset);
 			}
 
