@@ -40,12 +40,12 @@ API ["DOM styleSheet"] = function(newSheet){
 	
 	I ["test new sheet conforms to basic api"] = function(){
 		
-		var sheet = newSheet(SHEET_MOCK_1.raw);
+		var sheet = newSheet(CSS_MOCK.raw);
 		if (!sheet.cssRules) sheet.cssRules = sheet.rules;
 		
 		ok(sheet, "must actually create a sheet");
 		
-		matchesMock(sheet, SHEET_MOCK_1.parsed)
+		matchesMock(sheet, CSS_MOCK.parsed)
 	}
 	
 	I ["test webkit animation"] = function(){
@@ -117,70 +117,60 @@ API ["DOM style attribute"] = function(newStyle){
 };
 
 
-// Mocks
+// Mock
 
-var SHEET_MOCK_1 = {
-	
-	raw:"#selector { color: green; background-color: rgb(0, 255, 0); } #selector2 { color: blue; background-color: rgb(128, 0, 128); }",
-	
-	parsed:{
-		cssRules:[
-			{
-				// cssText: "#selector { color: green; background-color: rgb(0, 255, 0); }",
-				
-				selectorText: "#selector",
-				style: {
-					// cssText: "color: green; background-color: rgb(0, 255, 0); ",
-					
-					"color":"green",
-					"background-color":"rgb(0, 255, 0)",
-					backgroundColor:"rgb(0, 255, 0)",
-					
-					0: "color",
-					1: "background-color",
-					length: 2
-				}
-			},
-			{
-				// cssText: "#selector2 { color: blue; background-color: rgb(128, 0, 128); }",
-				
-				selectorText: "#selector2",
-				style: {
-					// cssText: "color: blue; background-color: rgb(128, 0, 128); ",
-					
-					"color":"blue",
-					"background-color":"rgb(128, 0, 128)",
-					backgroundColor:"rgb(128, 0, 128)",
-					
-					0: "color",
-					1: "background-color",
-					length: 2
-				}
-			}
-		]
-	}
-	
-};
+var CSS_MOCK = {raw:"",parsed:{}};
+var styleSheet = CSS_MOCK.parsed;
 
-var STYLE_MOCK_1 = {
-	
-	raw:"color: green; background-color: rgb(0, 255, 0);",
-	
-	parsed:{
-		style:{
-			// cssText: "color: green; background-color: rgb(0, 255, 0);",
-			
-			"color" : "green",
-			"background-color" : "rgb(0, 255, 0)",
-			backgroundColor : "rgb(0, 255, 0)",
-			
-			0: "color",
-			1: "background-color",
-			length: 2
-		}
-	}
-	
-};
+// styleSheet
+styleSheet.cssRules = [];
+styleSheet.cssRules.cssText = "";
+
+// cssRule
+styleSheet.cssRules[0] = {};
+styleSheet.cssRules[0].selectorText = "#selector";
+styleSheet.cssRules.cssText +=
+styleSheet.cssRules[0].cssText = "#selector { color: green; background-color: rgb(0, 255, 0); }";
+CSS_MOCK.raw += styleSheet.cssRules[0].cssText;
+
+// style
+styleSheet.cssRules[0].style = {};
+styleSheet.cssRules[0].style.cssText = "color: green; background-color: rgb(0, 255, 0);";
+styleSheet.cssRules[0].style[styleSheet.cssRules[0].style[0] = 'color'] = "green";
+styleSheet.cssRules[0].style.backgroundColor =
+styleSheet.cssRules[0].style[styleSheet.cssRules[0].style[1] = 'background-color'] = "rgb(0, 255, 0)";
+styleSheet.cssRules[0].style.length = 2;
+
+// cssRule
+styleSheet.cssRules[1] = {};
+styleSheet.cssRules[1].selectorText = "#selector2";
+styleSheet.cssRules.cssText +=
+styleSheet.cssRules[1].cssText = "#selector2 { color: blue; background-color: rgb(128, 0, 128); }";
+CSS_MOCK.raw += styleSheet.cssRules[1].cssText;
+
+// style
+styleSheet.cssRules[1].style = {};
+styleSheet.cssRules[1].style.cssText = "color: blue; background-color: rgb(128, 0, 128);";
+styleSheet.cssRules[1].style[styleSheet.cssRules[1].style[0] = 'color'] = "blue";
+styleSheet.cssRules[1].style.backgroundColor =
+styleSheet.cssRules[1].style[styleSheet.cssRules[1].style[1] = 'background-color'] = "rgb(128, 0, 128)";
+styleSheet.cssRules[1].style.length = 2;
+
+
+
+var STYLE_MOCK_1 = { parsed:{style:{}} };
+var style = STYLE_MOCK_1.parsed.style;
+
+STYLE_MOCK_1.raw = 
+style.cssText = "color: green; background-color: rgb(0, 255, 0);";
+
+style[style[0] = "color"] = "green";
+style.backgroundColor = 
+style[style[1] = "background-color"] = "rgb(0, 255, 0)";
+
+style.length = 2;
+
+
 
 var WEBKIT_ANIMATION_MOCK_1 = {
 	
@@ -199,7 +189,7 @@ var WEBKIT_ANIMATION_MOCK_1 = {
 
 				name:"my-animation",
 
-				// cssText:'@-webkit-keyframes my-animation { 0% { background-color:blue } 100% { background-color:green } }',
+				cssText:'@-webkit-keyframes my-animation { 0% { background-color:blue } 100% { background-color:green } }',
 
 				cssRules:{
 					
@@ -207,10 +197,10 @@ var WEBKIT_ANIMATION_MOCK_1 = {
 					
 					0:{//WebKitCSSKeyframeRule
 						// type:9,
-						// cssText: "0% { background-color: blue; }",
+						cssText: "0% { background-color: blue; }",
 						keyText: "0%",
 						style: {
-							// cssText: "background-color: blue; ",
+							cssText: "background-color: blue; ",
 							
 							"background-color": "blue",
 							backgroundColor: "blue",
@@ -221,10 +211,10 @@ var WEBKIT_ANIMATION_MOCK_1 = {
 					},
 					1:{//WebKitCSSKeyframeRule
 						// type:9,
-						// cssText: "100% { background-color: green; }",
+						cssText: "100% { background-color: green; }",
 						keyText: "100%",
 						style: {
-							// cssText: "background-color: green; ",
+							cssText: "background-color: green; ",
 							
 							"background-color": "green",
 							backgroundColor: "green",
@@ -238,10 +228,10 @@ var WEBKIT_ANIMATION_MOCK_1 = {
 				// length:2,
 				0:{//WebKitCSSKeyframeRule
 					// type:9,
-					// cssText: "0% { background-color: blue; }",
+					cssText: "0% { background-color: blue; }",
 					keyText: "0%",
 					style: {
-						// cssText: "background-color: blue; ",
+						cssText: "background-color: blue; ",
 						
 						"background-color": "blue",
 						backgroundColor: "blue",
@@ -252,10 +242,10 @@ var WEBKIT_ANIMATION_MOCK_1 = {
 				},
 				1:{//WebKitCSSKeyframeRule
 					// type:9,
-					// cssText: "100% { background-color: green; }",
+					cssText: "100% { background-color: green; }",
 					keyText: "100%",
 					style: {
-						// cssText: "background-color: green; ",
+						cssText: "background-color: green; ",
 						
 						"background-color": "green",
 						backgroundColor: "green",
