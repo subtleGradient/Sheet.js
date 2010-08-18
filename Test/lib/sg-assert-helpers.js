@@ -24,6 +24,8 @@ function normalizeCSSText(string){
 }
 
 function matchesMock(actual, expected, errorMessage){
+	if (!errorMessage) errorMessage = "";
+	
 	if (typeof actual == 'undefined' && expected != null){
 		ok(actual, errorMessage + ' is undefined')
 		return;
@@ -41,7 +43,7 @@ function matchesMock(actual, expected, errorMessage){
 	
 	equal("length" in actual, "length" in expected, errorMessage + " same length");
 	if ("length" in expected && + expected.length){
-		equal(actual.length, expected.length, errorMessage);
+		equal(actual.length, expected.length, errorMessage + ".length");
 	}
 	
 	if (typeof expected == 'string')
