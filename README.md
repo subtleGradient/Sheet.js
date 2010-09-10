@@ -1,6 +1,8 @@
 Sheet.js by Thomas Aylott of MooTools
 
-**STATE: pre-alpha, but well tested and stable. API will change before 1.0**
+**STATE: well tested and stable**
+
+This project uses semver.org standard version numbering.
 
 Sheet.js
 ========
