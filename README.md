@@ -9,6 +9,7 @@ Sheet.js
 Parse CSS in JavaScript
 
 * Test-first Development
+* UniversalJS
 * Zero dependencies
 * DOM-less (no document necessary)
 * CommonJS Modules 1.0+ with global fallback
