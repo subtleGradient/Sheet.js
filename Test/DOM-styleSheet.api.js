@@ -62,6 +62,17 @@ API ["DOM styleSheet"] = function(newSheet){
 		
 		matchesMock(sheet, WEBKIT_ANIMATION_MOCK_1.parsed)
 	}
+
+	I ["test CSS rules inside strings"] = function(){
+
+		var sheet = newSheet(CONTENT_MOCK_1.raw);
+		if (!sheet.cssRules) sheet.cssRules = sheet.rules;
+
+		ok(sheet, "must actually create a sheet");
+
+		matchesMock(sheet, CONTENT_MOCK_1.parsed)
+
+	}
 	
 	I ["test updating values updates cssText"] = function(){
 		
@@ -180,6 +191,27 @@ style[style[1] = "background-color"] = "rgb(0, 255, 0)";
 
 style.length = 2;
 
+
+var CONTENT_MOCK_1 = {
+
+	raw: "img {content:'a {color: red}'}",
+
+	parsed: {
+		cssRules: {
+			length: 1,
+			0: {
+				cssText: "img {content:'a {color: red}'}",
+				style: {
+					length: 1,
+					0: "content",
+					cssText: "content:'a {color: red}'",
+					content: "'a{color:red}'"
+				},
+				undefined: undefined
+			}
+		}
+	}
+}
 
 
 var WEBKIT_ANIMATION_MOCK_1 = {
