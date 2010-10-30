@@ -28,7 +28,7 @@ exports.Sheet = Sheet
 /*</depend>*/
 
 
-Sheet.version = '1.0.1'
+Sheet.version = '1.0.2rc1'
 
 function Sheet(cssText){
 	if (this instanceof Sheet) this.initialize(cssText)

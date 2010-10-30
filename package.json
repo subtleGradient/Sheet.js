@@ -1,7 +1,7 @@
 {
 
 	"name": "Sheet",
-	"version": "1.0.1",
+	"version": "1.0.2rc1",
 
 	"description": "100% DOM-less JavaScript implementation of the styleSheets, cssRule & style APIs \nSupports custom and browser-incompatible CSS syntax like nested rules",
 	"keywords": [
