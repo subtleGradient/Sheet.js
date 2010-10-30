@@ -96,8 +96,13 @@ var x = combineRegExp
 
 CSS.atRule = x([CSS.at, ';'])
 
-;(CSS.keyValue = x(/\s*([-a-zA-Z0-9]+):\s*(.*?)(?:;|(?=\})|$)/))
-.names=[               '_key',               '_value']
+;(CSS.keyValue_key = x(/([-a-zA-Z0-9]+)/))
+.names=[                '_key']
+
+;(CSS.keyValue_value = x(/(.*?)(?:;|(?=\})|$)/))
+.names=[                  '_value']
+
+;(CSS.keyValue = x([CSS.keyValue_key ,/\s*:\s*/, CSS.keyValue_value]))
 
 ;(CSS.comment = x(/\/\*\s*((?:[^*]|\*(?!\/))*)\s*\*\//))
 .names=[                   'comment']
