@@ -54,3 +54,47 @@ If you need to move Sheet.js to its own custom namespace simply define a global 
 
 You really shouldn't need to do that.
 But isn't it great to know you could?
+
+
+TODO: Add curly bracket test that is WAY too deep or document the depth
+
+* * *
+
+sg.Sheet.js v2
+==============
+Multi-Teir Scope-based Low-level Multi-pass parser
+--------------------------------------------------
+
+* Implement many standalone parsers that convert a string into an object
+* Implement a scope selector system to allow you define a parser for a given scope
+	* e.g. "sheet rule selector"
+* TODO: async option runs each parsing step in a separate run loop
+* TODO: bootstrap for running as a worker
+* TODO: on demand lazy parsing. Only parse something as it is accessed (where supported!)
+* You can add additional processing steps in totally separate files
+	* Want to parse your selectors using Slick.Parser.js?
+	* Want to parse your style property values to get at 
+
+How it works (or will when I make it do this)
+
+stylesheet string
+→ stylesheet.rules
+rule.selector string
+rule.style string
+→ style[property]
+→ style[i] = property
+
+
+1. **stylesheet string** → **stylesheet object**
+1. **stylesheet object** → **r object**
+2. **selector string** → **selector object**
+3. `'background-color:blue;color:red'` | **style string** → **style object** `{background-color:'blue', color:'red'}`
+4. `'background-color', 'blue', obj` | **style object** → `{length:1, 0:'background-color', background-color:'blue', backgroundColor:'blue'}`
+5. `'blue'` | propertyValue → `#00f`
+
+1. `"selector a{background-color:blue;color:red}selector b{background-color:blue;color:red}"` | rulesParser → `[{**selector**:'selector a',**style**:'background-color:blue;color:red'}, {selector:'selector b',block:'background-color:blue;color:red'}]`
+2. `"selector a"` | **selector string** → *{ Selector OM object }*
+3. `'background-color:blue;color:red'` | **style string** → **style object** `{background-color:'blue', color:'red'}`
+4. `'background-color', 'blue', obj` | **style object** → `{length:1, 0:'background-color', background-color:'blue', backgroundColor:'blue'}`
+5. `'blue'` | propertyValue → `#00f`
+
