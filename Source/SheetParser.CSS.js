@@ -28,7 +28,7 @@ var SheetParser = exports.SheetParser
 /*</depend>*/
 
 
-var CSS = SheetParser.CSS = {version: '1.0.1'}
+var CSS = SheetParser.CSS = {version: '1.0.2 dev'}
 
 CSS.camelCase = function(string){
 	return ('' + string).replace(camelCaseSearch, camelCaseReplace)
