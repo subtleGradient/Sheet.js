@@ -63,6 +63,14 @@ API ["DOM styleSheet"] = function(newSheet){
 		matchesMock(sheet, WEBKIT_ANIMATION_MOCK_1.parsed)
 	}
 	
+	for (var i = 0; i < MOCK_COMMENTS.length; ++i)
+		I ["test comments " + MOCK_COMMENTS[i].raw] = 
+			newMockTest(MOCK_COMMENTS[i].raw, MOCK_COMMENTS[i].parsed, newSheet)
+	
+	for (var i = 0; i < MOCK_COMMENTS_2.length; ++i)
+		I ["test comments " + MOCK_COMMENTS_2[i].raw] = 
+			newMockTest(MOCK_COMMENTS_2[i].raw, MOCK_COMMENTS_2[i].parsed, newSheet)
+	
 	I ["test updating values updates cssText"] = function(){
 		
 		var style = '#selector{color:green}';
@@ -127,6 +135,14 @@ API ["DOM style attribute"] = function(newStyle){
 };
 
 
+function newMockTest(raw, parser, newSheet){
+	return function(){
+		matchesMock(newSheet(raw), parser)
+	}
+}
+
+
+// //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  // //
 // Mock
 
 var CSS_MOCK = {raw:"",parsed:{}};
@@ -167,6 +183,7 @@ styleSheet.cssRules[1].style[styleSheet.cssRules[1].style[1] = 'background-color
 styleSheet.cssRules[1].style.length = 2;
 
 
+// //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  // //
 
 var STYLE_MOCK_1 = { parsed:{style:{}} };
 var style = STYLE_MOCK_1.parsed.style;
@@ -181,6 +198,7 @@ style[style[1] = "background-color"] = "rgb(0, 255, 0)";
 style.length = 2;
 
 
+// //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  // //
 
 var WEBKIT_ANIMATION_MOCK_1 = {
 	
@@ -271,3 +289,44 @@ var WEBKIT_ANIMATION_MOCK_1 = {
 	
 };
 
+// //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  // //
+
+var	comment, MOCK_COMMENTS = []
+MOCK_COMMENTS[MOCK_COMMENTS.length] = { raw:'b{color:red}', parsed:{ cssRules:{ length:1, 0:{ cssText:"b{color:red}", style:{ length:1, 0:"color", color:"red" } } } } }
+comment = "/*a*/"
+MOCK_COMMENTS[MOCK_COMMENTS.length] = { raw:''+comment+'b{color:red}', parsed:MOCK_COMMENTS[0].parsed }
+MOCK_COMMENTS[MOCK_COMMENTS.length] = { raw:'b'+comment+'{color:red}', parsed:MOCK_COMMENTS[0].parsed }
+MOCK_COMMENTS[MOCK_COMMENTS.length] = { raw:'b{'+comment+'color:red}', parsed:MOCK_COMMENTS[0].parsed }
+MOCK_COMMENTS[MOCK_COMMENTS.length] = { raw:'b{color'+comment+':red}', parsed:MOCK_COMMENTS[0].parsed }
+MOCK_COMMENTS[MOCK_COMMENTS.length] = { raw:'b{color:'+comment+'red}', parsed:MOCK_COMMENTS[0].parsed }
+MOCK_COMMENTS[MOCK_COMMENTS.length] = { raw:'b{color:red'+comment+'}', parsed:MOCK_COMMENTS[0].parsed }
+MOCK_COMMENTS[MOCK_COMMENTS.length] = { raw:'b{color:red}'+comment+'', parsed:MOCK_COMMENTS[0].parsed }
+
+comment = "\
+/******************************\n\
+ * lol, Block Comment\n\
+******************************/\n\
+"
+MOCK_COMMENTS[MOCK_COMMENTS.length] = { raw:''+comment+'b{color:red}', parsed:MOCK_COMMENTS[0].parsed }
+MOCK_COMMENTS[MOCK_COMMENTS.length] = { raw:'b'+comment+'{color:red}', parsed:MOCK_COMMENTS[0].parsed }
+MOCK_COMMENTS[MOCK_COMMENTS.length] = { raw:'b{'+comment+'color:red}', parsed:MOCK_COMMENTS[0].parsed }
+MOCK_COMMENTS[MOCK_COMMENTS.length] = { raw:'b{color'+comment+':red}', parsed:MOCK_COMMENTS[0].parsed }
+MOCK_COMMENTS[MOCK_COMMENTS.length] = { raw:'b{color:'+comment+'red}', parsed:MOCK_COMMENTS[0].parsed }
+MOCK_COMMENTS[MOCK_COMMENTS.length] = { raw:'b{color:red'+comment+'}', parsed:MOCK_COMMENTS[0].parsed }
+MOCK_COMMENTS[MOCK_COMMENTS.length] = { raw:'b{color:red}'+comment+'', parsed:MOCK_COMMENTS[0].parsed }
+
+var MOCK_COMMENTS_2 = []
+for (var i = 0; i < MOCK_COMMENTS.length; ++i){
+	MOCK_COMMENTS_2[MOCK_COMMENTS_2.length] = {
+		raw: MOCK_COMMENTS[i].raw + MOCK_COMMENTS[i].raw,
+		parsed: {
+			cssRules: {
+				length: 2,
+				0: MOCK_COMMENTS[i].parsed.cssRules[0],
+				1: MOCK_COMMENTS[i].parsed.cssRules[0]
+			}
+		}
+	}
+}
+
+// //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  // //
