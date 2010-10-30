@@ -50,6 +50,9 @@ CSS.parse = function(cssText){
 	
 	rules.cssText = cssText = ('' + cssText)
 	
+	// strip comments
+	cssText = cssText.replace(CSS.comment, '');
+	
 	regex.lastIndex = 0
 	while ((found = regex.exec(cssText))){
 		// avoid an infinite loop on zero-length keys
