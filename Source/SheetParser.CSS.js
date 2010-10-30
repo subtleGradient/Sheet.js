@@ -111,17 +111,20 @@ CSS.atBlock = x([CSS.at, CSS.block])
 
 var OR = '|'
 
-CSS.parser = x([
-	x(CSS.comment)
-	,OR
-	,x(CSS.atBlock)
-	,OR
-	,x(CSS.atRule)
-	,OR
-	,x(CSS.selectorBlock)
-	,OR
-	,x(CSS.keyValue)
-],'cssText')
+CSS.parser = x
+(
+	[	x(CSS.comment)
+	,	OR
+	,	x(CSS.atBlock)
+	,	OR
+	,	x(CSS.atRule)
+	,	OR
+	,	x(CSS.selectorBlock)
+	,	OR
+	,	x(CSS.keyValue)
+	]
+,	'cssText'
+)
 
 
 })(typeof exports != 'undefined' ? exports : this);
