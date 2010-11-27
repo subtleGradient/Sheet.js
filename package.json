@@ -43,7 +43,6 @@
 	"directories": {
 		"src": "./Source",
 		"lib": "./Source",
-		"doc": ".",
 		"test": "./Test"
 	},
 
