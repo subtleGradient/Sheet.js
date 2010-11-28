@@ -100,8 +100,26 @@ CSS.atRule = x([CSS.at, ';'])
 ;(CSS.keyValue_key = x(/([-a-zA-Z0-9]+)/))
 .names=[                '_key']
 
-;(CSS.keyValue_value = x(/(.*?)(?:;|(?=\})|$)/))
-.names=[                  '_value']
+;(CSS.keyValue_value_end = x(/(?:;|(?=\})|$)/))
+
+;(CSS.notString = x(/[^"']+/))
+;(CSS.stringSingle = x(/"(?:[^"]*|\\")"/))
+;(CSS.stringDouble = x(/'(?:[^']*|\\')'/))
+;(CSS.string = x(['(?:',CSS.stringSingle ,OR, CSS.stringDouble,')']))
+;(CSS.propertyValue = x([/.*?/, CSS.keyValue_value_end]))
+
+;(CSS.keyValue_value = x(
+[
+	x(['((?:'
+	,	CSS.stringSingle
+	,	OR
+	,	CSS.stringDouble
+	,	OR
+	,	/[^;]/// not string nor end of value
+	,	')*)'
+	])
+,	CSS.keyValue_value_end
+])).names = ['_value']
 
 ;(CSS.keyValue = x([CSS.keyValue_key ,/\s*:\s*/, CSS.keyValue_value]))
 
