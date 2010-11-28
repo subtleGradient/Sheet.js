@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv=Content-type content="text/html; charset=utf-8">
+	<title>Sheet.js Demo</title>
+<link rel=stylesheet href=pp.css>
+
+<style>
+html,
+body{
+	margin:0;padding:0;
+}
+
+.codePane{
+	height:50px;
+	width:98%;
+	display:block;
+	float:left;
+	font-size: 10px;
+}
+
+.pp {
+	width:50%;
+	float:left;
+}
+</style>
+</head>
+<body>
+<div>
+
+
+<textarea id=css0 class=codePane>
+a{background-image:url(http://foo.com?};)}
+@-webkit-keyframes my-animation { 0% { background-color:blue } 100% { background-color:green } }
+</textarea>
+<!--
+@media my-media, foo,bar and (baz) { foo { background-color:blue } bar { background-color:green } }
+.foo .bar .baz { color: red; background-color: rgb(0,128,255); content:"a {color: red}"; }
+@media screen and (max-width:400px) and (max-height:600px) {
+	.foo { color: blue; line-height: 1.5em }
+}
+-->
+<div class=pp><h2>Your Browser</h2><div id=preview1></div></div>
+<div class=pp><h2>Sheet.js</h2><div id=preview0></div></div>
+
+
+</div>
+<script src="../Source/sg-regex-tools.js"></script>
+<script src="../Source/SheetParser.CSS.js"></script>
+<script src="../Source/Sheet.js"></script>
+<script src="../Source/Sheet.DOM.js"></script>
+
+<script src=subtlegradient-jslib.js></script>
+<script>
+
+function setup(){
+	var codePane = document.getElementById('css0')
+	var previewEl = document.getElementById('preview0')
+	var previewEl1 = document.getElementById('preview1')
+	
+	function update(){
+		css = new Sheet(codePane.value)
+		previewEl.innerHTML = pp(css)
+		
+		css = Sheet.DOM.createSheet(codePane.value)
+		previewEl1.innerHTML = pp(css)
+	}
+	
+	SubtleEventsJr.add(codePane, 'change', update)
+	SubtleEventsJr.add(codePane, 'keyup', update)
+	update()
+}
+
+window.onload = setup
+
+</script>
+</body>
+</html>

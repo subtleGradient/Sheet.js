@@ -1,0 +1,69 @@
+html{
+	font-family: sans-serif;
+	font-size: 13px;
+}
+.object{
+	border: 2px solid #5F5;
+	padding: 1ex;
+}
+.object th{
+	color: #0A0;
+	text-align: left;
+}
+.object th:first-child{
+	text-align: right;
+}
+.array{
+	border: 2px solid #FF5;
+}
+.string{
+	font-family: Georgia;
+/*	font-size: 15px;*/
+/*	line-height: 1.5;*/
+	display: inline-block;
+	max-width: 66ex;
+	margin: .5em 0;
+	color: #A50;
+	background: #FF5;
+}
+.string:after,
+.string:before{
+	content:'"';
+	color: #AAA;
+}
+.number{
+	color:#0A0;
+}
+.boolean{
+	font-weight: bold;
+}
+.true{
+	background: #5F5;
+}
+.false{
+}
+.regexp{
+	color: #00A;
+	background: #5FF;
+	padding: .5ex 1ex;
+}
+.function{
+	display: block;
+	white-space: pre;
+	white-space: pre-break;
+	color: #00A;
+	background: #AAA;
+	border-left: .5ex solid;
+	font-size: 10px;
+}
+
+:target{
+	-webkit-transition:all .5s ease-in;
+	border-color:blue;
+	outline:2px solid blue;
+}
+
+.object th{
+	vertical-align: top;
+}
+
