@@ -42,9 +42,6 @@ API ["DOM styleSheet"] = function(newSheet){
 	
 	I ["test new sheet conforms to basic api"] = function(){
 		
-		// console.log(newSheet)
-		// console.log(''+newSheet)
-		
 		var sheet = newSheet(CSS_MOCK.raw);
 		if (!sheet.cssRules) sheet.cssRules = sheet.rules;
 		
@@ -119,9 +116,6 @@ API ["DOM style attribute"] = function(newStyle){
 	I ["test Exists"] = function(){ok( newStyle )}
 	
 	I ["test new sheet conforms to basic api"] = function(){
-		
-		// console.log(newStyle)
-		// console.log(''+newStyle)
 		
 		var sheet = newStyle(STYLE_MOCK_1.raw);
 		if (!sheet.cssRules) sheet.cssRules = sheet.rules;
