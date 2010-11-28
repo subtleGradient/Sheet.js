@@ -30,6 +30,16 @@ var SheetParser = exports.SheetParser
 
 var CSS = SheetParser.CSS = {version: '1.0.2 dev'}
 
+CSS.trim = trim
+function trim(str){
+	// http://blog.stevenlevithan.com/archives/faster-trim-javascript
+	var	str = str.replace(/^\s\s*/, ''),
+		ws = /\s/,
+		i = str.length;
+	while (ws.test(str.charAt(--i)));
+	return str.slice(0, i + 1);
+}
+
 CSS.camelCase = function(string){
 	return ('' + string).replace(camelCaseSearch, camelCaseReplace)
 }
@@ -69,7 +79,7 @@ CSS.parse = function(cssText){
 		rules[rules.length++] = rule = {}
 		for (i = 0, l = names.length; i < l; ++i){
 			if (!(names[i-1] && found[i])) continue
-			rule[names[i-1]] = found[i]
+			rule[names[i-1]] = trim(found[i])
 		}
 	}
 	
