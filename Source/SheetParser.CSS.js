@@ -132,7 +132,9 @@ CSS.atRule = x([CSS.at, ';'])
 ;(CSS.stringSingle = x(/"(?:[^"]*|\\")"/))
 ;(CSS.stringDouble = x(/'(?:[^']*|\\')'/))
 ;(CSS.string = x(['(?:',CSS.stringSingle ,OR, CSS.stringDouble,')']))
-;(CSS.propertyValue = x([/.*?/, CSS.keyValue_value_end]))
+;(CSS.propertyValue = x([/[^;}]+/, CSS.keyValue_value_end]))
+
+var rRound = "(?:[^()]|\\((?:[^()]|\\((?:[^()]|\\((?:[^()]|\\([^()]*\\))*\\))*\\))*\\))"
 
 ;(CSS.keyValue_value = x(
 [
@@ -141,7 +143,9 @@ CSS.atRule = x([CSS.at, ';'])
 	,	OR
 	,	CSS.stringDouble
 	,	OR
-	,	/[^;]/// not string nor end of value
+	,	"\\("+rRound+"*\\)"
+	,	OR
+	,	/[^;}()]/ // not a keyValue_value terminator
 	,	')*)'
 	])
 ,	CSS.keyValue_value_end
@@ -155,7 +159,10 @@ CSS.atRule = x([CSS.at, ';'])
 ;(CSS.selector = x(['(',/\s*(\d+%)\s*/,OR,'(?:',/[^{}'"()]|\([^)]*\)|\[[^\]]*\]/,')+',')']))
 .names=[    'selectorText','keyText']
 
-;(CSS.block = x(/\{\s*((?:[^{}]|\{(?:[^{}]|\{(?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*\})*\})*)\s*\}/))
+var rCurly = "(?:[^{}]|\\{(?:[^{}]|\\{(?:[^{}]|\\{(?:[^{}]|\\{[^{}]*\\})*\\})*\\})*\\})"
+var rCurlyRound = "(?:[^{}()]+|\\{(?:[^{}()]+|\\{(?:[^{}()]+|\\{(?:[^{}()]+|\\{[^{}()]*\\})*\\})*\\})*\\})"
+
+;(CSS.block = x("\\{\\s*((?:"+"\\("+rRound+"*\\)|"+rCurly+")*)\\s*\\}"))
 .names=[              '_style_cssText']
 
 CSS.selectorBlock = x([CSS.selector, CSS.block])
