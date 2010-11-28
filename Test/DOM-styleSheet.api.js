@@ -74,14 +74,6 @@ API ["DOM styleSheet"] = function(newSheet){
 
 	}
 	
-	for (var i = 0; i < MOCK_COMMENTS.length; ++i)
-		I ["test comments " + MOCK_COMMENTS[i].raw] = 
-			newMockTest(MOCK_COMMENTS[i].raw, MOCK_COMMENTS[i].parsed, newSheet)
-	
-	for (var i = 0; i < MOCK_COMMENTS_2.length; ++i)
-		I ["test comments " + MOCK_COMMENTS_2[i].raw] = 
-			newMockTest(MOCK_COMMENTS_2[i].raw, MOCK_COMMENTS_2[i].parsed, newSheet)
-	
 	I ["test updating values updates cssText"] = function(){
 		
 		var style = '#selector{color:green}';
@@ -99,6 +91,22 @@ API ["DOM styleSheet"] = function(newSheet){
 		matchesMock(sheet.cssRules[0].cssText.toString(), '#selector{color:blue}');
 		matchesMock(''+sheet.cssRules[0].cssText, '#selector{color:blue}');
 	}
+	
+	for (var i = 0; i < MOCK_VALUES.length; ++i)
+		I ["test selectors " + MOCK_VALUES[i].raw] = 
+			newMockTest(MOCK_VALUES[i].raw, MOCK_VALUES[i].parsed, newSheet)
+	
+	for (var i = 0; i < MOCK_SELECTORS.length; ++i)
+		I ["test selectors " + MOCK_SELECTORS[i].raw] = 
+			newMockTest(MOCK_SELECTORS[i].raw, MOCK_SELECTORS[i].parsed, newSheet)
+	
+	for (var i = 0; i < MOCK_COMMENTS.length; ++i)
+		I ["test comments " + MOCK_COMMENTS[i].raw] = 
+			newMockTest(MOCK_COMMENTS[i].raw, MOCK_COMMENTS[i].parsed, newSheet)
+	
+	for (var i = 0; i < MOCK_COMMENTS_2.length; ++i)
+		I ["test comments " + MOCK_COMMENTS_2[i].raw] = 
+			newMockTest(MOCK_COMMENTS_2[i].raw, MOCK_COMMENTS_2[i].parsed, newSheet)
 	
 	return I;
 };
@@ -360,5 +368,43 @@ for (var i = 0; i < MOCK_COMMENTS.length; ++i){
 		}
 	}
 }
+
+// //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  // //
+
+var	rule, MOCK, comment, MOCK_SELECTORS = []
+MOCK=MOCK_SELECTORS[MOCK_SELECTORS.length]={parsed:{cssRules:{length:1,0:{style:{length:1,0:"color",color:"red"}}}}};rule=MOCK.parsed.cssRules[0];MOCK.raw=rule.cssText=(rule.selectorText=
+"a")+"{color:red}"
+MOCK=MOCK_SELECTORS[MOCK_SELECTORS.length]={parsed:{cssRules:{length:1,0:{style:{length:1,0:"color",color:"red"}}}}};rule=MOCK.parsed.cssRules[0];MOCK.raw=rule.cssText=(rule.selectorText=
+"a:first-child")+"{color:red}"
+MOCK=MOCK_SELECTORS[MOCK_SELECTORS.length]={parsed:{cssRules:{length:1,0:{style:{length:1,0:"color",color:"red"}}}}};rule=MOCK.parsed.cssRules[0];MOCK.raw=rule.cssText=(rule.selectorText=
+"a:not()")+"{color:red}"
+MOCK=MOCK_SELECTORS[MOCK_SELECTORS.length]={parsed:{cssRules:{length:1,0:{style:{length:1,0:"color",color:"red"}}}}};rule=MOCK.parsed.cssRules[0];MOCK.raw=rule.cssText=(rule.selectorText=
+"a:not(a b c)")+"{color:red}"
+MOCK=MOCK_SELECTORS[MOCK_SELECTORS.length]={parsed:{cssRules:{length:1,0:{style:{length:1,0:"color",color:"red"}}}}};rule=MOCK.parsed.cssRules[0];MOCK.raw=rule.cssText=(rule.selectorText=
+"a:contains(a{b:c})")+"{color:red}"
+MOCK=MOCK_SELECTORS[MOCK_SELECTORS.length]={parsed:{cssRules:{length:1,0:{style:{length:1,0:"color",color:"red"}}}}};rule=MOCK.parsed.cssRules[0];MOCK.raw=rule.cssText=(rule.selectorText=
+"a:contains('a{b:c}')")+"{color:red}"
+MOCK=MOCK_SELECTORS[MOCK_SELECTORS.length]={parsed:{cssRules:{length:1,0:{style:{length:1,0:"color",color:"red"}}}}};rule=MOCK.parsed.cssRules[0];MOCK.raw=rule.cssText=(rule.selectorText=
+'a:contains("a{b:c}")')+"{color:red}"
+MOCK=MOCK_SELECTORS[MOCK_SELECTORS.length]={parsed:{cssRules:{length:1,0:{style:{length:1,0:"color",color:"red"}}}}};rule=MOCK.parsed.cssRules[0];MOCK.raw=rule.cssText=(rule.selectorText=
+"a[href]")+"{color:red}"
+MOCK=MOCK_SELECTORS[MOCK_SELECTORS.length]={parsed:{cssRules:{length:1,0:{style:{length:1,0:"color",color:"red"}}}}};rule=MOCK.parsed.cssRules[0];MOCK.raw=rule.cssText=(rule.selectorText=
+"a[href=foo]")+"{color:red}"
+MOCK=MOCK_SELECTORS[MOCK_SELECTORS.length]={parsed:{cssRules:{length:1,0:{style:{length:1,0:"color",color:"red"}}}}};rule=MOCK.parsed.cssRules[0];MOCK.raw=rule.cssText=(rule.selectorText=
+"a[href=foo bar]")+"{color:red}"
+MOCK=MOCK_SELECTORS[MOCK_SELECTORS.length]={parsed:{cssRules:{length:1,0:{style:{length:1,0:"color",color:"red"}}}}};rule=MOCK.parsed.cssRules[0];MOCK.raw=rule.cssText=(rule.selectorText=
+"a[href='foo bar']")+"{color:red}"
+MOCK=MOCK_SELECTORS[MOCK_SELECTORS.length]={parsed:{cssRules:{length:1,0:{style:{length:1,0:"color",color:"red"}}}}};rule=MOCK.parsed.cssRules[0];MOCK.raw=rule.cssText=(rule.selectorText=
+'a[href="foo bar"]')+"{color:red}"
+MOCK=MOCK_SELECTORS[MOCK_SELECTORS.length]={parsed:{cssRules:{length:1,0:{style:{length:1,0:"color",color:"red"}}}}};rule=MOCK.parsed.cssRules[0];MOCK.raw=rule.cssText=(rule.selectorText=
+"a[href='a{b:c}']")+"{color:red}"
+MOCK=MOCK_SELECTORS[MOCK_SELECTORS.length]={parsed:{cssRules:{length:1,0:{style:{length:1,0:"color",color:"red"}}}}};rule=MOCK.parsed.cssRules[0];MOCK.raw=rule.cssText=(rule.selectorText=
+'a[href="a{b:c}"]')+"{color:red}"
+// //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  // //
+
+var	rule, MOCK, comment, MOCK_VALUES = []
+MOCK=MOCK_VALUES[MOCK_VALUES.length]={parsed:{cssRules:{length:1,0:{selectorText:"a",style:{length:1,0:"background-color",backgroundColor:"url(http://foo.com?};)"}}}}};
+rule=MOCK.parsed.cssRules[0];
+MOCK.raw=rule.cssText="a{background-color:url(http://foo.com?};)}"
 
 // //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  // //
