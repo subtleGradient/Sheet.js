@@ -83,10 +83,26 @@ CSS.parse = function(cssText){
 		}
 	}
 	
+	var atKey, atRule, atList, atI
 	for (i = 0, l = rules.length; i < l; ++i){
 		if (!rules[i] || !rules[i]._style_cssText) continue
 		
 		rules[i].style = CSS.parse(rules[i]._style_cssText)
+		delete rules[i]._style_cssText
+		
+		// _atKey/_atValue
+		if (atKey = rules[i]._atKey){
+			atKey = CSS.camelCase(atKey)
+			atRule = {length:0}
+			rules[i][atKey] = atRule
+			atRule[atKey + "Text"] = rules[i]._atValue
+			atList = ('' + rules[i]._atValue).split(/,\s*/)
+			for (atI = 0; atI < atList.length; ++atI){
+				atRule[atRule.length ++] = atList[atI]
+			}
+			delete rules[i]._atKey
+			delete rules[i]._atValue
+		}
 		
 		for (ruleCount = -1, r = -1, rule; rule = rules[i].style[++r];){
 			if (typeof rule == 'string') continue
@@ -102,8 +118,8 @@ CSS.parse = function(cssText){
 var x = combineRegExp
 var OR = '|'
 
-;(CSS.at = x(/\s*(@[-a-zA-Z0-9]+)\s+([^;{]*)/))
-.names=[         'kind',              'name']
+;(CSS.at = x(/\s*@([-a-zA-Z0-9]+)\s+(([\w-]+)?[^;{]*)/))
+.names=[         '_atKey',           '_atValue', 'name']
 
 CSS.atRule = x([CSS.at, ';'])
 
