@@ -126,7 +126,7 @@ CSS.atRule = x([CSS.at, ';'])
 ;(CSS.comment = x(/\/\*\s*((?:[^*]|\*(?!\/))*)\s*\*\//))
 .names=[                   'comment']
 
-;(CSS.selector = x(/\s*((\d+%)|[^\{}]+?)\s*/))
+;(CSS.selector = x(/\s*((\d+%)|[^\{}'"]+)\s*/))
 .names=[               'selectorText','keyText']
 
 ;(CSS.block = x(/\{\s*((?:[^{}]|\{(?:[^{}]|\{(?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*\})*\})*)\s*\}/))
