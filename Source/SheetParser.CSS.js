@@ -74,9 +74,9 @@ CSS.parse = function(cssText){
 	}
 	
 	for (i = -1, l = rules.length; i < l; ++i){
-		if (!rules[i] || !rules[i].style_cssText) continue
+		if (!rules[i] || !rules[i]._style_cssText) continue
 		
-		rules[i].style = CSS.parse(rules[i].style_cssText)
+		rules[i].style = CSS.parse(rules[i]._style_cssText)
 		
 		for (ruleCount = -1, r = -1, rule; rule = rules[i].style[++r];){
 			if (typeof rule == 'string') continue
@@ -111,7 +111,7 @@ CSS.atRule = x([CSS.at, ';'])
 .names=[               'selectorText','keyText']
 
 ;(CSS.block = x(/\{\s*((?:[^{}]|\{(?:[^{}]|\{(?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*\})*\})*)\s*\}/))
-.names=[               'style_cssText']
+.names=[              '_style_cssText']
 
 CSS.selectorBlock = x([CSS.selector, CSS.block])
 
