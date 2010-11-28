@@ -90,6 +90,7 @@ CSS.parse = function(cssText){
 }
 
 var x = combineRegExp
+var OR = '|'
 
 ;(CSS.at = x(/\s*(@[-a-zA-Z0-9]+)\s+([^;{]*)/))
 .names=[         'kind',              'name']
@@ -116,8 +117,6 @@ CSS.atRule = x([CSS.at, ';'])
 CSS.selectorBlock = x([CSS.selector, CSS.block])
 
 CSS.atBlock = x([CSS.at, CSS.block])
-
-var OR = '|'
 
 CSS.parser = x
 (
