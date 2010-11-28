@@ -67,8 +67,8 @@ CSS.parse = function(cssText){
 		}
 		
 		rules[rules.length++] = rule = {}
-			if (!found[i]) continue
 		for (i = 0, l = names.length; i < l; ++i){
+			if (!(names[i-1] && found[i])) continue
 			rule[names[i-1]] = found[i]
 		}
 	}
