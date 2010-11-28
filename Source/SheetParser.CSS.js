@@ -67,13 +67,13 @@ CSS.parse = function(cssText){
 		}
 		
 		rules[rules.length++] = rule = {}
-		for (i = -1, l = names.length; i < l; ++i){
 			if (!found[i]) continue
+		for (i = 0, l = names.length; i < l; ++i){
 			rule[names[i-1]] = found[i]
 		}
 	}
 	
-	for (i = -1, l = rules.length; i < l; ++i){
+	for (i = 0, l = rules.length; i < l; ++i){
 		if (!rules[i] || !rules[i]._style_cssText) continue
 		
 		rules[i].style = CSS.parse(rules[i]._style_cssText)
