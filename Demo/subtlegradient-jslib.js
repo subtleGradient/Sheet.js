@@ -317,7 +317,7 @@ function pp(object, depth){
 		className += ' style'
 	case 'object':
 		className += ' object'
-		if (ppd[uid]) return '<a href="#pp-'+uid+'">Dupicate Object</a>'
+		if (ppd[uid]) return '<a href="#pp-'+uid+'">Reused Object</a>'
 		ppd[uid] = true
 		var keys = {uid:true}
 		h += '<table id="pp-'+uid+'" class="'+className+'"><tr><th>key</th><th>value</th></tr>';
