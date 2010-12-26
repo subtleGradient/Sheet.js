@@ -317,10 +317,10 @@ function pp(object, depth){
 		className += ' style'
 	case 'object':
 		className += ' object'
-		if (ppd[uid]) return '<a href="#pp-'+uid+'">DUPLICATE!</a>'
+		if (ppd[uid]) return '<a href="#pp-'+uid+'">Dupicate Object</a>'
 		ppd[uid] = true
 		var keys = {uid:true}
-		h += '<table id="pp-'+uid+'" class="'+className+'"><tr><th>KEY</th><th>VALUE</th></tr>';
+		h += '<table id="pp-'+uid+'" class="'+className+'"><tr><th>key</th><th>value</th></tr>';
 		for (var key in object) {
 			if (!hasOwnProperty.call(object, key)) continue;
 			if (keys[key]) continue;
@@ -344,7 +344,7 @@ function pp(object, depth){
 		
 		break;
 	case 'array':
-		if (ppd[uid]) return "DUPLICATE!"
+		if (ppd[uid]) return "Dupicate Object"
 		ppd[uid] = true
 		h += '<ol id="pp-'+uid+'" class="array" start="0">';
 		for (var key=0; key < object.length; key++) {
