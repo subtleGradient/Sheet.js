@@ -397,8 +397,8 @@ MOCK=MOCK_SELECTORS[MOCK_SELECTORS.length]={parsed:{cssRules:{length:1,0:{style:
 // //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  // //
 
 var	rule, MOCK, comment, MOCK_VALUES = []
-MOCK=MOCK_VALUES[MOCK_VALUES.length]={parsed:{cssRules:{length:1,0:{selectorText:"a",style:{length:1,0:"background-color",backgroundColor:"url(http://foo.com?};)"}}}}};
+MOCK=MOCK_VALUES[MOCK_VALUES.length]={parsed:{cssRules:{length:1,0:{selectorText:"a",style:{length:1,0:"background-image",backgroundImage:"url(http://foo.com/?};)"}}}}};
 rule=MOCK.parsed.cssRules[0];
-MOCK.raw=rule.cssText="a{background-color:url(http://foo.com?};)}"
+MOCK.raw=rule.cssText="a{background-image:url(http://foo.com/?};)}"
 
 // //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  // //
