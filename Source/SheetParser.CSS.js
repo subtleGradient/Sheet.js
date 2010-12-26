@@ -97,11 +97,14 @@ CSS.parse = function(cssText){
 			atKey = CSS.camelCase(atKey)
 			atRule = {length:0}
 			rules[i][atKey] = atRule
+			atRule["_source"] =
 			atRule[atKey + "Text"] = rules[i]._atValue
 			atList = ('' + rules[i]._atValue).split(/,\s*/)
 			for (atI = 0; atI < atList.length; ++atI){
 				atRule[atRule.length ++] = atList[atI]
 			}
+			rules[i].length = 1
+			rules[i][0] = atKey
 			delete rules[i]._atKey
 			delete rules[i]._atValue
 		}
