@@ -85,10 +85,12 @@ CSS.parse = function(cssText){
 	
 	var atKey, atRule, atList, atI
 	for (i = 0, l = rules.length; i < l; ++i){
-		if (!rules[i] || !rules[i]._style_cssText) continue
+		if (!rules[i]) continue
 		
-		rules[i].style = CSS.parse(rules[i]._style_cssText)
-		delete rules[i]._style_cssText
+		if (rules[i]._style_cssText){
+			rules[i].style = CSS.parse(rules[i]._style_cssText)
+			delete rules[i]._style_cssText
+		}
 		
 		// _atKey/_atValue
 		if (atKey = rules[i]._atKey){
