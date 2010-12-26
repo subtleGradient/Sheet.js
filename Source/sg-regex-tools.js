@@ -26,7 +26,12 @@ exports.combineRegExp = function(regex, group){
 		}
 		if (regex[i].names)	names = names.concat(regex[i].names)
 	}
-	regex = new RegExp(source,'gm')
+	try {
+		regex = new RegExp(source,'gm')
+	}
+	catch (e){
+		throw new SyntaxError('Invalid Syntax: ' + source +'; '+ e)
+	}
 	// [key] → 1
 	for (i = -1; i < names.length; ++i) names[names[i]] = i + 1
 	// [1] → key
