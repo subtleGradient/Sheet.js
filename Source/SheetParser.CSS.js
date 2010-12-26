@@ -106,6 +106,7 @@ CSS.parse = function(cssText){
 			delete rules[i]._atValue
 		}
 		
+		if (rules[i].style)
 		for (ruleCount = -1, r = -1, rule; rule = rules[i].style[++r];){
 			if (typeof rule == 'string') continue
 			rules[i][r] = (rules[i].cssRules || (rules[i].cssRules = {}))[++ ruleCount]  = rule
