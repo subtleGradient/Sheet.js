@@ -58,7 +58,7 @@ CSS.parse = function(cssText){
 	,	i,r,l
 	,	ruleCount
 	
-	rules.cssText = cssText = ('' + cssText)
+	rules.cssText = cssText = trim(cssText)
 	
 	// strip comments
 	cssText = cssText.replace(CSS.comment, '');
