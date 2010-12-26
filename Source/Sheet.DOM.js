@@ -15,36 +15,14 @@ provides : Sheet.DOM
 if (typeof Sheet == 'undefined') Sheet = {}
 if (Sheet.DOM == null) Sheet.DOM = {}
 
-Sheet.DOM.createSheet = function(raw){
-	var	oldLength = styleSheets.length
-	,	style
-	,	sheet
-	
-	if (document.createStyleSheet){
-		document.createStyleSheet()
-		styleSheets[styleSheets.length - 1].cssText = raw
-	}
-	
-	if (oldLength >= styleSheets.length){
-		style = document.createElement('style')
-		style.setAttribute('type','text/css')
-		style.appendChild(document.createTextNode(raw))
-		document.getElementsByTagName('head')[0].appendChild(style)
-	}
-	
-	if (oldLength >= styleSheets.length){
-		style = document.createElement('div')
-		style.innerHTML = '<style type="text/css">' + String_escapeHTML.call(raw) + '</style>'
-		document.getElementsByTagName('head')[0].appendChild(style)
-	}
-	
-	if (oldLength >= styleSheets.length)
-		throw new Error('no styleSheet added :(')
-	
-	sheet = styleSheets[styleSheets.length - 1]
-	sheet.cssText = raw
-	
-	return sheet
+Sheet.DOM.createSheet = createStyleSheetWithCSS
+function createStyleSheetWithCSS(css){
+	var styleElement = document.createElement("style")
+	styleElement.appendChild(document.createTextNode(css))
+	styleElement.setAttribute('name', styleElement.id = "SheetRuler-" + +new Date)
+	document.getElementsByTagName('head')[0].appendChild(styleElement)
+
+	return styleElement.sheet || styleElement.styleSheet
 }
 
 Sheet.DOM.createStyle = function(raw){
