@@ -33,7 +33,7 @@ var CSS = SheetParser.CSS = {version: '1.0.2 dev'}
 CSS.trim = trim
 function trim(str){
 	// http://blog.stevenlevithan.com/archives/faster-trim-javascript
-	var	str = str.replace(/^\s\s*/, ''),
+	var	str = (''+str).replace(/^\s\s*/, ''),
 		ws = /\s/,
 		i = str.length;
 	while (ws.test(str.charAt(--i)));
