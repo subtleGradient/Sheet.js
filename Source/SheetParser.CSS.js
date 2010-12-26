@@ -129,8 +129,8 @@ CSS.atRule = x([CSS.at, ';'])
 ;(CSS.keyValue_value_end = x(/(?:;|(?=\})|$)/))
 
 ;(CSS.notString = x(/[^"']+/))
-;(CSS.stringSingle = x(/"(?:[^"]*|\\")"/))
-;(CSS.stringDouble = x(/'(?:[^']*|\\')'/))
+;(CSS.stringSingle = x(/"(?:[^"]|\\")*"/))
+;(CSS.stringDouble = x(/'(?:[^']|\\')*'/))
 ;(CSS.string = x(['(?:',CSS.stringSingle ,OR, CSS.stringDouble,')']))
 ;(CSS.propertyValue = x([/[^;}]+/, CSS.keyValue_value_end]))
 
