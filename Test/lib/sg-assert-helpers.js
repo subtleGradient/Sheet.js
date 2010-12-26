@@ -41,7 +41,6 @@ function matchesMock(actual, expected, errorMessage){
 		return;
 	}
 	
-	equal("length" in actual, "length" in expected, errorMessage + " same length");
 	if ("length" in expected && + expected.length){
 		equal(actual.length, expected.length, errorMessage + ".length");
 	}
