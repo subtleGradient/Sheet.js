@@ -70,6 +70,16 @@ API ["DOM styleSheet"] = function(newSheet){
 		matchesMock(sheet, CONTENT_MOCK_1.parsed)
 
 	}
+
+	I ["test comments inside strings"] = function(){
+
+		var sheet = newSheet(CONTENT_MOCK_2.raw);
+		if (!sheet.cssRules) sheet.cssRules = sheet.rules;
+
+		ok(sheet, "must actually create a sheet");
+
+		matchesMock(sheet, CONTENT_MOCK_2.parsed)
+	}
 	
 	I ["test updating values updates cssText"] = function(){
 		
@@ -226,6 +236,27 @@ var CONTENT_MOCK_1 = {
 					0: "content",
 					cssText: "content:'a {color: red}'",
 					content: "'a{color:red}'"
+				},
+				undefined: undefined
+			}
+		}
+	}
+}
+
+var CONTENT_MOCK_2 = {
+
+	raw: '.comment {content:"/* boo */"}',
+
+	parsed: {
+		cssRules: {
+			length: 1,
+			0: {
+				cssText: '.comment {content:"/* boo */"}',
+				style: {
+					length: 1,
+					0: "content",
+					cssText: 'content:"/* boo */"}',
+					content: '"/* boo */"'
 				},
 				undefined: undefined
 			}
