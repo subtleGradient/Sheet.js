@@ -29,10 +29,10 @@ body{
 <div>
 
 
-<textarea id=css0 class=codePane>
+<style id=css0 class=codePane media=lulz contenteditable>
 a{background-image:url(http://foo.com?};)}
 @-webkit-keyframes my-animation { 0% { background-color:blue } 100% { background-color:green } }
-</textarea>
+</style>
 <!--
 @media my-media, foo,bar and (baz) { foo { background-color:blue } bar { background-color:green } }
 .foo .bar .baz { color: red; background-color: rgb(0,128,255); content:"a {color: red}"; }
@@ -59,13 +59,14 @@ function setup(){
 	var previewEl1 = document.getElementById('preview1')
 	
 	function update(){
-		css = new Sheet(codePane.value)
+		css = new Sheet(codePane.textContent)
 		previewEl.innerHTML = pp(css)
 		
-		css = Sheet.DOM.createSheet(codePane.value)
+		css = Sheet.DOM.createSheet(codePane.textContent)
 		previewEl1.innerHTML = pp(css)
 	}
 	
+	SubtleEventsJr.add(codePane, 'input', update)
 	SubtleEventsJr.add(codePane, 'change', update)
 	SubtleEventsJr.add(codePane, 'keyup', update)
 	update()

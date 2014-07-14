@@ -6,14 +6,12 @@ if (typeof exports == 'undefined') exports = {};
 
 if (typeof require != 'undefined') {
 	// If run from the project root
-	require.paths.unshift('Source');
-	require.paths.unshift('Test');
 	
 	if (typeof API == 'undefined')
-		var API = require("DOM-styleSheet.api");
+		var API = require("./DOM-styleSheet.api");
 	
 	if (typeof Sheet == 'undefined')
-		var Sheet = require("Sheet").Sheet;
+		var Sheet = require("../Source/Sheet").Sheet;
 }
 
 // Test
@@ -23,3 +21,11 @@ exports ["test Sheet.js | DOM styleSheet"] =
 
 exports ["test Sheet.js | DOM style attribute"] = 
 	API ["DOM style attribute"] (Sheet);
+
+  Object.keys(exports).forEach(function(moduleName){
+    console.log(moduleName)
+    Object.keys(exports[moduleName]).forEach(function(testName){
+      console.log(testName)
+      exports[moduleName][testName]()
+    })
+  })

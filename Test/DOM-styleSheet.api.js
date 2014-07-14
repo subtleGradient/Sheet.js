@@ -4,11 +4,10 @@
 
 /*<CommonJS>*/
 if (typeof assert == 'undefined' && typeof require != 'undefined') {
-	require.paths.push('Test/lib');
 	var assert = require('assert');
 
 	if (typeof	test == 'undefined')
-		var		test = require('SG-Assert-Helpers')
+		var		test = require('./lib/SG-Assert-Helpers')
 		.		test;
 }
 /*</CommonJS>*/
@@ -19,11 +18,11 @@ var equal = assert.equal;
 // Local testing sugar
 
 if (typeof	normalizeCSSText == 'undefined')
-	var		normalizeCSSText = require('SG-Assert-Helpers')
+	var		normalizeCSSText = require('./lib/SG-Assert-Helpers')
 	.		normalizeCSSText;
 
 if (typeof	matchesMock == 'undefined')
-	var		matchesMock = require('SG-Assert-Helpers')
+	var		matchesMock = require('./lib/SG-Assert-Helpers')
 	.		matchesMock;
 
 // API
